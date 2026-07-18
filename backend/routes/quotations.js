@@ -143,7 +143,13 @@ async function performCalculation(inputSnapshot) {
   const configList = await allQuery("SELECT * FROM config");
   const config = {};
   configList.forEach(c => {
-    if (c.key === 'padSheetWidth' || c.key === 'padSheetHeight' || c.key === 'aluminiumStockLength') {
+    if ([
+      'padSheetWidth', 'padSheetHeight', 'padSheetDepth', 'padReqQty',
+      'bottomPlateWidth', 'bottomPlateHeight', 'bottomPlateDepth', 'bottomPlateReqQty',
+      'sidePlateWidth', 'sidePlateHeight', 'sidePlateDepth', 'sidePlateReqQty',
+      'supportPattiWidth', 'supportPattiHeight', 'supportPattiDepth', 'supportPattiReqQty',
+      'aluminiumStockLength'
+    ].includes(c.key)) {
       config[c.key] = parseFloat(c.value);
     } else {
       config[c.key] = c.value;

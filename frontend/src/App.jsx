@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { LayoutDashboard, Calculator, Users, Settings, LogOut, Snowflake, Eye, FileText, FileSpreadsheet, IndianRupee, Percent } from 'lucide-react';
+import seetechLogo from './assets/seetech-logo.png';
 
 const API_URL = 'http://localhost:3000/api';
 
@@ -53,19 +54,35 @@ export default function App() {
 
   // Admin Rate Card Form inputs
   const [rcVersion, setRcVersion] = useState('');
-  const [rcPadW, setRcPadW] = useState(1180);
+  
+  // Evaporative Cooling Pad 7090(NTK)
   const [rcPadH, setRcPadH] = useState(2000);
-  const [rcPadCost, setRcPadCost] = useState(150);
-  const [rcAluLen, setRcAluLen] = useState(3660);
-  const [rcAluCost, setRcAluCost] = useState(80);
-  const [rcAluWastage, setRcAluWastage] = useState(7);
-  const [rcPattiLen, setRcPattiLen] = useState(3660);
-  const [rcPattiCost, setRcPattiCost] = useState(60);
-  const [rcPattiWastage, setRcPattiWastage] = useState(7);
-  const [rcPlateW, setRcPlateW] = useState(1220);
-  const [rcPlateH, setRcPlateH] = useState(2440);
-  const [rcPlateCost, setRcPlateCost] = useState(200);
-  const [rcPlateWastage, setRcPlateWastage] = useState(7);
+  const [rcPadW, setRcPadW] = useState(1180);
+  const [rcPadD, setRcPadD] = useState(100);
+  const [rcPadQty, setRcPadQty] = useState(20);
+  const [rcPadCost, setRcPadCost] = useState(3000);
+
+  // Aluminium Frame - Bottom Plate
+  const [rcBottomPlateH, setRcBottomPlateH] = useState(1828);
+  const [rcBottomPlateW, setRcBottomPlateW] = useState(3048);
+  const [rcBottomPlateD, setRcBottomPlateD] = useState(100);
+  const [rcBottomPlateQty, setRcBottomPlateQty] = useState(10);
+  const [rcBottomPlateCost, setRcBottomPlateCost] = useState(2800);
+
+  // Aluminium Frame - Side Plate
+  const [rcSidePlateH, setRcSidePlateH] = useState(1828);
+  const [rcSidePlateW, setRcSidePlateW] = useState(3048);
+  const [rcSidePlateD, setRcSidePlateD] = useState(100);
+  const [rcSidePlateQty, setRcSidePlateQty] = useState(44);
+  const [rcSidePlateCost, setRcSidePlateCost] = useState(700);
+
+  // Aluminium Suport Patti
+  const [rcSupportPattiH, setRcSupportPattiH] = useState(1828);
+  const [rcSupportPattiW, setRcSupportPattiW] = useState(8500);
+  const [rcSupportPattiD, setRcSupportPattiD] = useState(100);
+  const [rcSupportPattiQty, setRcSupportPattiQty] = useState(16);
+  const [rcSupportPattiCost, setRcSupportPattiCost] = useState(0);
+
   const [rcLphMultiplier, setRcLphMultiplier] = useState(4);
   const [adminPumps, setAdminPumps] = useState([]);
   const [adminPlumbingBands, setAdminPlumbingBands] = useState([]);
@@ -103,20 +120,35 @@ export default function App() {
       setActiveRateCard(rc);
 
       // Initialize admin card edit values
-      setRcPadW(rc.pad_sheet_width);
-      setRcPadH(rc.pad_sheet_height);
-      setRcPadCost(rc.cooling_pad_unit_cost);
-      setRcAluLen(rc.alu_stock_length || rc.aluminiumStockLength || 3660);
-      setRcAluCost(rc.aluminium_cost_per_bar);
-      setRcAluWastage((rc.wastage_factor * 100).toFixed(0));
-      setRcPattiLen(rc.alu_stock_length || 3660);
-      setRcPattiCost(rc.support_patti_cost_per_bar);
-      setRcPattiWastage((rc.wastage_factor * 100).toFixed(0));
-      setRcPlateW(rc.plate_sheet_width || 1220);
-      setRcPlateH(rc.plate_sheet_height || 2440);
-      setRcPlateCost(rc.plate_cost_per_sheet);
-      setRcPlateWastage((rc.wastage_factor * 100).toFixed(0));
-      setRcLphMultiplier(rc.lph_multiplier);
+      // 1. Evaporative Cooling Pad 7090(NTK)
+      setRcPadW(parseFloat(cfg.padSheetWidth) || 1180);
+      setRcPadH(parseFloat(cfg.padSheetHeight) || 2000);
+      setRcPadD(parseFloat(cfg.padSheetDepth) || 100);
+      setRcPadQty(parseFloat(cfg.padReqQty) || 20);
+      setRcPadCost(rc.cooling_pad_unit_cost || 3000);
+
+      // 2. Aluminium Frame - Bottom Plate
+      setRcBottomPlateW(parseFloat(cfg.bottomPlateWidth) || 3048);
+      setRcBottomPlateH(parseFloat(cfg.bottomPlateHeight) || 1828);
+      setRcBottomPlateD(parseFloat(cfg.bottomPlateDepth) || 100);
+      setRcBottomPlateQty(parseFloat(cfg.bottomPlateReqQty) || 10);
+      setRcBottomPlateCost(rc.plate_cost_per_sheet || 2800);
+
+      // 3. Aluminium Frame - Side Plate
+      setRcSidePlateW(parseFloat(cfg.sidePlateWidth) || 3048);
+      setRcSidePlateH(parseFloat(cfg.sidePlateHeight) || 1828);
+      setRcSidePlateD(parseFloat(cfg.sidePlateDepth) || 100);
+      setRcSidePlateQty(parseFloat(cfg.sidePlateReqQty) || 44);
+      setRcSidePlateCost(rc.aluminium_cost_per_bar || 700);
+
+      // 4. Aluminium Suport Patti
+      setRcSupportPattiW(parseFloat(cfg.supportPattiWidth) || 8500);
+      setRcSupportPattiH(parseFloat(cfg.supportPattiHeight) || 1828);
+      setRcSupportPattiD(parseFloat(cfg.supportPattiDepth) || 100);
+      setRcSupportPattiQty(parseFloat(cfg.supportPattiReqQty) || 16);
+      setRcSupportPattiCost(rc.support_patti_cost_per_bar || 0);
+
+      setRcLphMultiplier(rc.lph_multiplier || 4);
       setAdminPlumbingBands(rc.plumbingCostBands || []);
 
       // 3. Fetch active pumps
@@ -344,10 +376,10 @@ export default function App() {
       effectiveDate: new Date().toISOString().slice(0, 10),
       isActive: true,
       coolingPadUnitCost: parseFloat(rcPadCost),
-      aluminiumCostPerBar: parseFloat(rcAluCost),
-      plateCostPerSheet: parseFloat(rcPlateCost),
-      supportPattiCostPerBar: parseFloat(rcPattiCost),
-      wastageFactor: parseFloat(rcAluWastage) / 100,
+      aluminiumCostPerBar: parseFloat(rcSidePlateCost),
+      plateCostPerSheet: parseFloat(rcBottomPlateCost),
+      supportPattiCostPerBar: parseFloat(rcSupportPattiCost),
+      wastageFactor: 0.07, // constant fallback
       lphMultiplier: parseFloat(rcLphMultiplier),
       plumbingCostBands: adminPlumbingBands
     };
@@ -365,8 +397,27 @@ export default function App() {
       // 2. Save/Update Config keys
       await fetchWithAuth(`${API_URL}/configs/padSheetWidth`, { method: 'PUT', headers: { 'Content-Type':'application/json' }, body: JSON.stringify({ value: rcPadW }) });
       await fetchWithAuth(`${API_URL}/configs/padSheetHeight`, { method: 'PUT', headers: { 'Content-Type':'application/json' }, body: JSON.stringify({ value: rcPadH }) });
-      await fetchWithAuth(`${API_URL}/configs/aluminiumStockLength`, { method: 'PUT', headers: { 'Content-Type':'application/json' }, body: JSON.stringify({ value: rcAluLen }) });
-      await fetchWithAuth(`${API_URL}/configs/plateStockSize`, { method: 'PUT', headers: { 'Content-Type':'application/json' }, body: JSON.stringify({ value: `${rcPlateW}x${rcPlateH}` }) });
+      await fetchWithAuth(`${API_URL}/configs/padSheetDepth`, { method: 'PUT', headers: { 'Content-Type':'application/json' }, body: JSON.stringify({ value: rcPadD }) });
+      await fetchWithAuth(`${API_URL}/configs/padReqQty`, { method: 'PUT', headers: { 'Content-Type':'application/json' }, body: JSON.stringify({ value: rcPadQty }) });
+
+      await fetchWithAuth(`${API_URL}/configs/bottomPlateWidth`, { method: 'PUT', headers: { 'Content-Type':'application/json' }, body: JSON.stringify({ value: rcBottomPlateW }) });
+      await fetchWithAuth(`${API_URL}/configs/bottomPlateHeight`, { method: 'PUT', headers: { 'Content-Type':'application/json' }, body: JSON.stringify({ value: rcBottomPlateH }) });
+      await fetchWithAuth(`${API_URL}/configs/bottomPlateDepth`, { method: 'PUT', headers: { 'Content-Type':'application/json' }, body: JSON.stringify({ value: rcBottomPlateD }) });
+      await fetchWithAuth(`${API_URL}/configs/bottomPlateReqQty`, { method: 'PUT', headers: { 'Content-Type':'application/json' }, body: JSON.stringify({ value: rcBottomPlateQty }) });
+
+      await fetchWithAuth(`${API_URL}/configs/sidePlateWidth`, { method: 'PUT', headers: { 'Content-Type':'application/json' }, body: JSON.stringify({ value: rcSidePlateW }) });
+      await fetchWithAuth(`${API_URL}/configs/sidePlateHeight`, { method: 'PUT', headers: { 'Content-Type':'application/json' }, body: JSON.stringify({ value: rcSidePlateH }) });
+      await fetchWithAuth(`${API_URL}/configs/sidePlateDepth`, { method: 'PUT', headers: { 'Content-Type':'application/json' }, body: JSON.stringify({ value: rcSidePlateD }) });
+      await fetchWithAuth(`${API_URL}/configs/sidePlateReqQty`, { method: 'PUT', headers: { 'Content-Type':'application/json' }, body: JSON.stringify({ value: rcSidePlateQty }) });
+
+      await fetchWithAuth(`${API_URL}/configs/supportPattiWidth`, { method: 'PUT', headers: { 'Content-Type':'application/json' }, body: JSON.stringify({ value: rcSupportPattiW }) });
+      await fetchWithAuth(`${API_URL}/configs/supportPattiHeight`, { method: 'PUT', headers: { 'Content-Type':'application/json' }, body: JSON.stringify({ value: rcSupportPattiH }) });
+      await fetchWithAuth(`${API_URL}/configs/supportPattiDepth`, { method: 'PUT', headers: { 'Content-Type':'application/json' }, body: JSON.stringify({ value: rcSupportPattiD }) });
+      await fetchWithAuth(`${API_URL}/configs/supportPattiReqQty`, { method: 'PUT', headers: { 'Content-Type':'application/json' }, body: JSON.stringify({ value: rcSupportPattiQty }) });
+
+      // Compat configuration aliases for the core engine:
+      await fetchWithAuth(`${API_URL}/configs/aluminiumStockLength`, { method: 'PUT', headers: { 'Content-Type':'application/json' }, body: JSON.stringify({ value: rcSidePlateW }) });
+      await fetchWithAuth(`${API_URL}/configs/plateStockSize`, { method: 'PUT', headers: { 'Content-Type':'application/json' }, body: JSON.stringify({ value: `${rcBottomPlateW}x${rcBottomPlateH}` }) });
 
       // 3. Save Pump Models
       // Delete old pump models and write new ones to maintain clean state
@@ -498,7 +549,9 @@ export default function App() {
       
       {/* SIDEBAR NAVIGATION */}
       <aside className="sidebar">
-        <div className="sidebar-brand"><Snowflake color="var(--accent-primary)" size={28} style={{ marginRight: "0.5rem" }} /> Adiabatic Cooler Quatation</div>
+        <div className="sidebar-brand" style={{ marginBottom: '2.5rem', display: 'flex', justifyContent: 'center' }}>
+          <img src={seetechLogo} alt="Seetech" style={{ maxWidth: '100%', maxHeight: '50px', objectFit: 'contain' }} />
+        </div>
         <nav className="nav-menu">
           <div className={`nav-item ${currentPage === 'dashboard' ? 'active' : ''}`} onClick={() => navigateTo('dashboard')}>
             <LayoutDashboard size={18} /> Dashboard
@@ -542,21 +595,21 @@ export default function App() {
 
             <div className="metrics-grid">
               <div className="metric-card">
-  <div className="metric-icon" style={{ backgroundColor: '#eff6ff', color: '#3b82f6' }}><FileSpreadsheet size={28} /></div>
+  <div className="metric-icon" style={{ backgroundColor: 'rgba(56, 95, 168, 0.1)', color: '#385FA8' }}><FileSpreadsheet size={28} /></div>
   <div className="metric-info">
     <div className="metric-title">Quotes This Month</div>
     <div className="metric-value">{quotesThisMonth}</div>
   </div>
 </div>
               <div className="metric-card">
-  <div className="metric-icon" style={{ backgroundColor: '#f0fdf4', color: '#16a34a' }}><IndianRupee size={28} /></div>
+  <div className="metric-icon" style={{ backgroundColor: 'rgba(80, 184, 64, 0.1)', color: '#50B840' }}><IndianRupee size={28} /></div>
   <div className="metric-info">
     <div className="metric-title">Total Value This Month</div>
     <div className="metric-value">₹{totalValueThisMonth.toFixed(2)}</div>
   </div>
 </div>
               <div className="metric-card">
-  <div className="metric-icon" style={{ backgroundColor: '#faf5ff', color: '#9333ea' }}><Percent size={28} /></div>
+  <div className="metric-icon" style={{ backgroundColor: 'rgba(77, 77, 77, 0.1)', color: '#4D4D4D' }}><Percent size={28} /></div>
   <div className="metric-info">
     <div className="metric-title">Active Rate Version</div>
     <div className="metric-value" style={{ fontSize: '1.1rem' }}>{activeRateCard ? activeRateCard.versionLabel : 'N/A'}</div>
@@ -809,55 +862,116 @@ export default function App() {
                     <input type="text" required placeholder="e.g. July 2026 Adjustments" value={rcVersion} onChange={(e) => setRcVersion(e.target.value)} />
                   </div>
 
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
-                    <div className="form-group">
-                      <label>Cooling Pad Dimensions</label>
-                      <div style={{ display: 'flex', gap: '0.5rem' }}>
-                        <input type="number" required placeholder="W (mm)" value={rcPadW} onChange={(e) => setRcPadW(parseFloat(e.target.value) || 0)} style={{ width: '50%' }} />
-                        <input type="number" required placeholder="H (mm)" value={rcPadH} onChange={(e) => setRcPadH(parseFloat(e.target.value) || 0)} style={{ width: '50%' }} />
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', marginTop: '1.5rem' }}>
+                    
+                    {/* Item 1: Evaporative Cooling Pad 7090(NTK) */}
+                    <div className="product-input-card" style={{ padding: '1.25rem', border: '1px solid var(--border-color)', borderRadius: '6px', backgroundColor: 'rgba(255,255,255,0.02)' }}>
+                      <h3 style={{ fontSize: '0.95rem', fontWeight: '600', color: 'var(--accent-primary)', marginBottom: '1rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.5rem' }}>Evaporative Cooling Pad 7090(NTK)</h3>
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '0.75rem' }}>
+                        <div className="form-group" style={{ marginBottom: 0 }}>
+                          <span style={{ fontSize: '0.72rem', fontWeight: '600', color: 'var(--text-secondary)', textTransform: 'uppercase', marginBottom: '0.25rem', display: 'block' }}>Height (mm)</span>
+                          <input type="number" required placeholder="Height" value={rcPadH} onChange={(e) => setRcPadH(parseFloat(e.target.value) || 0)} />
+                        </div>
+                        <div className="form-group" style={{ marginBottom: 0 }}>
+                          <span style={{ fontSize: '0.72rem', fontWeight: '600', color: 'var(--text-secondary)', textTransform: 'uppercase', marginBottom: '0.25rem', display: 'block' }}>Width (mm)</span>
+                          <input type="number" required placeholder="Width" value={rcPadW} onChange={(e) => setRcPadW(parseFloat(e.target.value) || 0)} />
+                        </div>
+                        <div className="form-group" style={{ marginBottom: 0 }}>
+                          <span style={{ fontSize: '0.72rem', fontWeight: '600', color: 'var(--text-secondary)', textTransform: 'uppercase', marginBottom: '0.25rem', display: 'block' }}>Depth (mm)</span>
+                          <input type="number" required placeholder="Depth" value={rcPadD} onChange={(e) => setRcPadD(parseFloat(e.target.value) || 0)} />
+                        </div>
+                        <div className="form-group" style={{ marginBottom: 0 }}>
+                          <span style={{ fontSize: '0.72rem', fontWeight: '600', color: 'var(--text-secondary)', textTransform: 'uppercase', marginBottom: '0.25rem', display: 'block' }}>Req. Qty</span>
+                          <input type="number" required placeholder="Req.Qty" value={rcPadQty} onChange={(e) => setRcPadQty(parseFloat(e.target.value) || 0)} />
+                        </div>
+                        <div className="form-group" style={{ marginBottom: 0 }}>
+                          <span style={{ fontSize: '0.72rem', fontWeight: '600', color: 'var(--text-secondary)', textTransform: 'uppercase', marginBottom: '0.25rem', display: 'block' }}>Rate (₹)</span>
+                          <input type="number" step="0.01" required placeholder="Rate" value={rcPadCost} onChange={(e) => setRcPadCost(parseFloat(e.target.value) || 0)} />
+                        </div>
                       </div>
-                    </div>
-                    <div className="form-group">
-                      <label>Cooling Pad Cost per sheet (₹)</label>
-                      <input type="number" step="0.01" required value={rcPadCost} onChange={(e) => setRcPadCost(parseFloat(e.target.value) || 0)} />
                     </div>
 
-                    <div className="form-group">
-                      <label>Frame Stock Bar Length</label>
-                      <div style={{ display: 'flex', gap: '0.5rem' }}>
-                        <input type="number" required placeholder="Length (mm)" value={rcAluLen} onChange={(e) => setRcAluLen(parseFloat(e.target.value) || 0)} style={{ width: '50%' }} />
-                        <input type="number" required placeholder="Wastage %" value={rcAluWastage} onChange={(e) => setRcAluWastage(parseFloat(e.target.value) || 0)} style={{ width: '50%' }} />
+                    {/* Item 2: Aluminium Frame - Bottom Plate */}
+                    <div className="product-input-card" style={{ padding: '1.25rem', border: '1px solid var(--border-color)', borderRadius: '6px', backgroundColor: 'rgba(255,255,255,0.02)' }}>
+                      <h3 style={{ fontSize: '0.95rem', fontWeight: '600', color: 'var(--accent-primary)', marginBottom: '1rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.5rem' }}>Aluminium Frame - Bottom Plate</h3>
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '0.75rem' }}>
+                        <div className="form-group" style={{ marginBottom: 0 }}>
+                          <span style={{ fontSize: '0.72rem', fontWeight: '600', color: 'var(--text-secondary)', textTransform: 'uppercase', marginBottom: '0.25rem', display: 'block' }}>Height (mm)</span>
+                          <input type="number" required placeholder="Height" value={rcBottomPlateH} onChange={(e) => setRcBottomPlateH(parseFloat(e.target.value) || 0)} />
+                        </div>
+                        <div className="form-group" style={{ marginBottom: 0 }}>
+                          <span style={{ fontSize: '0.72rem', fontWeight: '600', color: 'var(--text-secondary)', textTransform: 'uppercase', marginBottom: '0.25rem', display: 'block' }}>Width (mm)</span>
+                          <input type="number" required placeholder="Width" value={rcBottomPlateW} onChange={(e) => setRcBottomPlateW(parseFloat(e.target.value) || 0)} />
+                        </div>
+                        <div className="form-group" style={{ marginBottom: 0 }}>
+                          <span style={{ fontSize: '0.72rem', fontWeight: '600', color: 'var(--text-secondary)', textTransform: 'uppercase', marginBottom: '0.25rem', display: 'block' }}>Depth (mm)</span>
+                          <input type="number" required placeholder="Depth" value={rcBottomPlateD} onChange={(e) => setRcBottomPlateD(parseFloat(e.target.value) || 0)} />
+                        </div>
+                        <div className="form-group" style={{ marginBottom: 0 }}>
+                          <span style={{ fontSize: '0.72rem', fontWeight: '600', color: 'var(--text-secondary)', textTransform: 'uppercase', marginBottom: '0.25rem', display: 'block' }}>Req. Qty</span>
+                          <input type="number" required placeholder="Req.Qty" value={rcBottomPlateQty} onChange={(e) => setRcBottomPlateQty(parseFloat(e.target.value) || 0)} />
+                        </div>
+                        <div className="form-group" style={{ marginBottom: 0 }}>
+                          <span style={{ fontSize: '0.72rem', fontWeight: '600', color: 'var(--text-secondary)', textTransform: 'uppercase', marginBottom: '0.25rem', display: 'block' }}>Rate (₹)</span>
+                          <input type="number" step="0.01" required placeholder="Rate" value={rcBottomPlateCost} onChange={(e) => setRcBottomPlateCost(parseFloat(e.target.value) || 0)} />
+                        </div>
                       </div>
-                    </div>
-                    <div className="form-group">
-                      <label>Aluminium Cost per Bar (₹)</label>
-                      <input type="number" step="0.01" required value={rcAluCost} onChange={(e) => setRcAluCost(parseFloat(e.target.value) || 0)} />
                     </div>
 
-                    <div className="form-group">
-                      <label>Support Patti Stock Length</label>
-                      <div style={{ display: 'flex', gap: '0.5rem' }}>
-                        <input type="number" required placeholder="Length (mm)" value={rcPattiLen} onChange={(e) => setRcPattiLen(parseFloat(e.target.value) || 0)} style={{ width: '50%' }} />
-                        <input type="number" required placeholder="Wastage %" value={rcPattiWastage} onChange={(e) => setRcPattiWastage(parseFloat(e.target.value) || 0)} style={{ width: '50%' }} />
+                    {/* Item 3: Aluminium Frame - Side Plate */}
+                    <div className="product-input-card" style={{ padding: '1.25rem', border: '1px solid var(--border-color)', borderRadius: '6px', backgroundColor: 'rgba(255,255,255,0.02)' }}>
+                      <h3 style={{ fontSize: '0.95rem', fontWeight: '600', color: 'var(--accent-primary)', marginBottom: '1rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.5rem' }}>Aluminium Frame - Side Plate</h3>
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '0.75rem' }}>
+                        <div className="form-group" style={{ marginBottom: 0 }}>
+                          <span style={{ fontSize: '0.72rem', fontWeight: '600', color: 'var(--text-secondary)', textTransform: 'uppercase', marginBottom: '0.25rem', display: 'block' }}>Height (mm)</span>
+                          <input type="number" required placeholder="Height" value={rcSidePlateH} onChange={(e) => setRcSidePlateH(parseFloat(e.target.value) || 0)} />
+                        </div>
+                        <div className="form-group" style={{ marginBottom: 0 }}>
+                          <span style={{ fontSize: '0.72rem', fontWeight: '600', color: 'var(--text-secondary)', textTransform: 'uppercase', marginBottom: '0.25rem', display: 'block' }}>Width (mm)</span>
+                          <input type="number" required placeholder="Width" value={rcSidePlateW} onChange={(e) => setRcSidePlateW(parseFloat(e.target.value) || 0)} />
+                        </div>
+                        <div className="form-group" style={{ marginBottom: 0 }}>
+                          <span style={{ fontSize: '0.72rem', fontWeight: '600', color: 'var(--text-secondary)', textTransform: 'uppercase', marginBottom: '0.25rem', display: 'block' }}>Depth (mm)</span>
+                          <input type="number" required placeholder="Depth" value={rcSidePlateD} onChange={(e) => setRcSidePlateD(parseFloat(e.target.value) || 0)} />
+                        </div>
+                        <div className="form-group" style={{ marginBottom: 0 }}>
+                          <span style={{ fontSize: '0.72rem', fontWeight: '600', color: 'var(--text-secondary)', textTransform: 'uppercase', marginBottom: '0.25rem', display: 'block' }}>Req. Qty</span>
+                          <input type="number" required placeholder="Req.Qty" value={rcSidePlateQty} onChange={(e) => setRcSidePlateQty(parseFloat(e.target.value) || 0)} />
+                        </div>
+                        <div className="form-group" style={{ marginBottom: 0 }}>
+                          <span style={{ fontSize: '0.72rem', fontWeight: '600', color: 'var(--text-secondary)', textTransform: 'uppercase', marginBottom: '0.25rem', display: 'block' }}>Rate (₹)</span>
+                          <input type="number" step="0.01" required placeholder="Rate" value={rcSidePlateCost} onChange={(e) => setRcSidePlateCost(parseFloat(e.target.value) || 0)} />
+                        </div>
                       </div>
-                    </div>
-                    <div className="form-group">
-                      <label>Support Patti Cost per Bar (₹)</label>
-                      <input type="number" step="0.01" required value={rcPattiCost} onChange={(e) => setRcPattiCost(parseFloat(e.target.value) || 0)} />
                     </div>
 
-                    <div className="form-group">
-                      <label>Plate Stock Sheeting Size</label>
-                      <div style={{ display: 'flex', gap: '0.5rem' }}>
-                        <input type="number" required placeholder="W" value={rcPlateW} onChange={(e) => setRcPlateW(parseFloat(e.target.value) || 0)} style={{ width: '33%' }} />
-                        <input type="number" required placeholder="H" value={rcPlateH} onChange={(e) => setRcPlateH(parseFloat(e.target.value) || 0)} style={{ width: '33%' }} />
-                        <input type="number" required placeholder="Wastage %" value={rcPlateWastage} onChange={(e) => setRcPlateWastage(parseFloat(e.target.value) || 0)} style={{ width: '33%' }} />
+                    {/* Item 4: Aluminium Suport Patti */}
+                    <div className="product-input-card" style={{ padding: '1.25rem', border: '1px solid var(--border-color)', borderRadius: '6px', backgroundColor: 'rgba(255,255,255,0.02)' }}>
+                      <h3 style={{ fontSize: '0.95rem', fontWeight: '600', color: 'var(--accent-primary)', marginBottom: '1rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.5rem' }}>Aluminium Suport Patti</h3>
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '0.75rem' }}>
+                        <div className="form-group" style={{ marginBottom: 0 }}>
+                          <span style={{ fontSize: '0.72rem', fontWeight: '600', color: 'var(--text-secondary)', textTransform: 'uppercase', marginBottom: '0.25rem', display: 'block' }}>Height (mm)</span>
+                          <input type="number" required placeholder="Height" value={rcSupportPattiH} onChange={(e) => setRcSupportPattiH(parseFloat(e.target.value) || 0)} />
+                        </div>
+                        <div className="form-group" style={{ marginBottom: 0 }}>
+                          <span style={{ fontSize: '0.72rem', fontWeight: '600', color: 'var(--text-secondary)', textTransform: 'uppercase', marginBottom: '0.25rem', display: 'block' }}>Width (mm)</span>
+                          <input type="number" required placeholder="Width" value={rcSupportPattiW} onChange={(e) => setRcSupportPattiW(parseFloat(e.target.value) || 0)} />
+                        </div>
+                        <div className="form-group" style={{ marginBottom: 0 }}>
+                          <span style={{ fontSize: '0.72rem', fontWeight: '600', color: 'var(--text-secondary)', textTransform: 'uppercase', marginBottom: '0.25rem', display: 'block' }}>Depth (mm)</span>
+                          <input type="number" required placeholder="Depth" value={rcSupportPattiD} onChange={(e) => setRcSupportPattiD(parseFloat(e.target.value) || 0)} />
+                        </div>
+                        <div className="form-group" style={{ marginBottom: 0 }}>
+                          <span style={{ fontSize: '0.72rem', fontWeight: '600', color: 'var(--text-secondary)', textTransform: 'uppercase', marginBottom: '0.25rem', display: 'block' }}>Req. Qty</span>
+                          <input type="number" required placeholder="Req.Qty" value={rcSupportPattiQty} onChange={(e) => setRcSupportPattiQty(parseFloat(e.target.value) || 0)} />
+                        </div>
+                        <div className="form-group" style={{ marginBottom: 0 }}>
+                          <span style={{ fontSize: '0.72rem', fontWeight: '600', color: 'var(--text-secondary)', textTransform: 'uppercase', marginBottom: '0.25rem', display: 'block' }}>Rate (₹)</span>
+                          <input type="number" step="0.01" required placeholder="Rate" value={rcSupportPattiCost} onChange={(e) => setRcSupportPattiCost(parseFloat(e.target.value) || 0)} />
+                        </div>
                       </div>
                     </div>
-                    <div className="form-group">
-                      <label>Plate Cost per sheet (₹)</label>
-                      <input type="number" step="0.01" required value={rcPlateCost} onChange={(e) => setRcPlateCost(parseFloat(e.target.value) || 0)} />
-                    </div>
+
                   </div>
 
                   <div className="form-group" style={{ marginTop: '1rem' }}>

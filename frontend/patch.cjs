@@ -8,18 +8,18 @@ css = css.replace(/:root\s*\{[\s\S]*?\}/, `:root {
   --bg-secondary: #ffffff;
   --bg-tertiary: #f1f5f9;
   
-  --accent-primary: #3b82f6;
-  --accent-secondary: #2563eb;
-  --accent-glow: rgba(59, 130, 246, 0.15);
+  --accent-primary: #385FA8; /* Seetech Blue */
+  --accent-secondary: #2d4c8a; /* Darker Seetech Blue */
+  --accent-glow: rgba(56, 95, 168, 0.15);
   
   --text-primary: #0f172a;
-  --text-secondary: #475569;
+  --text-secondary: #4D4D4D; /* Seetech Grey */
   --text-muted: #94a3b8;
   
   --border-color: #e2e8f0;
-  --border-glow: rgba(59, 130, 246, 0.3);
+  --border-glow: rgba(56, 95, 168, 0.3);
   
-  --success: #10b981;
+  --success: #50B840; /* Seetech Green */
   --warning: #f59e0b;
   --danger: #ef4444;
   
@@ -41,7 +41,7 @@ css = css.replace(/\.sidebar-brand\s*\{[\s\S]*?\}/, `.sidebar-brand {
 // Replace nav-item.active
 css = css.replace(/\.nav-item\.active\s*\{[\s\S]*?\}/, `.nav-item.active {
   color: var(--accent-secondary);
-  background: #eff6ff;
+  background: rgba(56, 95, 168, 0.1);
   border-radius: 0.5rem;
   font-weight: 600;
 }`);
@@ -117,7 +117,7 @@ app = app.replace(/<div className="sidebar-brand">/, '<div className="sidebar-br
 app = app.replace(
   /<div className="metric-card">\s*<div className="metric-title">Quotes This Month<\/div>\s*<div className="metric-value">\{quotesThisMonth\}<\/div>\s*<\/div>/,
   `<div className="metric-card">
-  <div className="metric-icon" style={{ backgroundColor: '#eff6ff', color: '#3b82f6' }}>📄</div>
+  <div className="metric-icon" style={{ backgroundColor: 'rgba(56, 95, 168, 0.1)', color: '#385FA8' }}>📄</div>
   <div className="metric-info">
     <div className="metric-title">Quotes This Month</div>
     <div className="metric-value">{quotesThisMonth}</div>
@@ -128,7 +128,7 @@ app = app.replace(
 app = app.replace(
   /<div className="metric-card">\s*<div className="metric-title">Total Value This Month<\/div>\s*<div className="metric-value">\s*₹\{totalValueThisMonth\.toFixed\(2\)\}\s*<\/div>\s*<\/div>/,
   `<div className="metric-card">
-  <div className="metric-icon" style={{ backgroundColor: '#f0fdf4', color: '#16a34a' }}>₹</div>
+  <div className="metric-icon" style={{ backgroundColor: 'rgba(80, 184, 64, 0.1)', color: '#50B840' }}>₹</div>
   <div className="metric-info">
     <div className="metric-title">Total Value This Month</div>
     <div className="metric-value">₹{totalValueThisMonth.toFixed(2)}</div>
@@ -139,7 +139,7 @@ app = app.replace(
 app = app.replace(
   /<div className="metric-card">\s*<div className="metric-title">Active Rate Version<\/div>\s*<div className="metric-value" style=\{\{ fontSize: '1.1rem', lineHeight: '1.8' \}\}>\s*\{activeRateCard \? activeRateCard\.versionLabel : 'N\/A'\}\s*<\/div>\s*<\/div>/,
   `<div className="metric-card">
-  <div className="metric-icon" style={{ backgroundColor: '#faf5ff', color: '#9333ea' }}>%</div>
+  <div className="metric-icon" style={{ backgroundColor: 'rgba(77, 77, 77, 0.1)', color: '#4D4D4D' }}>%</div>
   <div className="metric-info">
     <div className="metric-title">Active Rate Version</div>
     <div className="metric-value" style={{ fontSize: '1.1rem' }}>{activeRateCard ? activeRateCard.versionLabel : 'N/A'}</div>

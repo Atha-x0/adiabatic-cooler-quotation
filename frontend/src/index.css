@@ -5,18 +5,18 @@
   --bg-secondary: #ffffff;
   --bg-tertiary: #f1f5f9;
   
-  --accent-primary: #3b82f6;
-  --accent-secondary: #2563eb;
-  --accent-glow: rgba(59, 130, 246, 0.15);
+  --accent-primary: #385FA8; /* Seetech Blue */
+  --accent-secondary: #2d4c8a; /* Darker Seetech Blue */
+  --accent-glow: rgba(56, 95, 168, 0.15);
   
   --text-primary: #0f172a;
-  --text-secondary: #475569;
+  --text-secondary: #4D4D4D; /* Seetech Grey */
   --text-muted: #94a3b8;
   
   --border-color: #e2e8f0;
-  --border-glow: rgba(59, 130, 246, 0.3);
+  --border-glow: rgba(56, 95, 168, 0.3);
   
-  --success: #10b981;
+  --success: #50B840; /* Seetech Green */
   --warning: #f59e0b;
   --danger: #ef4444;
   
@@ -57,8 +57,8 @@ body {
   align-items: center;
   width: 100vw;
   height: 100vh;
-  background: radial-gradient(circle at top right, rgba(13, 148, 136, 0.15), transparent),
-              radial-gradient(circle at bottom left, rgba(14, 165, 233, 0.15), transparent);
+  background: radial-gradient(circle at top right, rgba(80, 184, 64, 0.15), transparent),
+              radial-gradient(circle at bottom left, rgba(56, 95, 168, 0.15), transparent);
 }
 
 .login-card {
@@ -141,7 +141,7 @@ body {
 
 .btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(14, 165, 233, 0.3);
+  box-shadow: 0 8px 20px rgba(56, 95, 168, 0.3);
 }
 
 .btn-secondary {
@@ -210,7 +210,7 @@ body {
 
 .nav-item.active {
   color: var(--accent-secondary);
-  background: #eff6ff;
+  background: rgba(56, 95, 168, 0.1);
   border-radius: 0.5rem;
   font-weight: 600;
 }
@@ -525,7 +525,7 @@ body {
 }
 
 .quote-total-banner {
-  background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(13, 148, 136, 0.1));
+  background: linear-gradient(135deg, rgba(56, 95, 168, 0.1), rgba(80, 184, 64, 0.1));
   border: 1.5px solid var(--accent-primary);
   padding: 1.5rem;
   border-radius: 1rem;

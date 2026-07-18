@@ -119,8 +119,9 @@ async function initDb() {
   if (configCount.count === 0) {
     await runQuery("INSERT INTO config (key, value) VALUES (?, ?)", ['padSheetWidth', '1180']);
     await runQuery("INSERT INTO config (key, value) VALUES (?, ?)", ['padSheetHeight', '2000']);
-    await runQuery("INSERT INTO config (key, value) VALUES (?, ?)", ['aluminiumStockLength', '3660']);
-    await runQuery("INSERT INTO config (key, value) VALUES (?, ?)", ['plateStockSize', '1220x2440']);
+    await runQuery("INSERT INTO config (key, value) VALUES (?, ?)", ['padSheetDepth', '100']);
+    await runQuery("INSERT INTO config (key, value) VALUES (?, ?)", ['aluminiumStockLength', '3048']);
+    await runQuery("INSERT INTO config (key, value) VALUES (?, ?)", ['plateStockSize', '3048x1828']);
   }
 
   // Seed default users if empty
@@ -155,8 +156,8 @@ async function initDb() {
         plumbing_cost_bands_json, wastage_factor, lph_multiplier
       ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `, [
-      'Standard Rates v1', '2026-07-08', 1, 150.00,
-      80.00, 200.00, 60.00,
+      'Image Rates v1', '2026-07-18', 1, 3000.00,
+      700.00, 2800.00, 0.00,
       defaultPlumbingBands, 0.07, 4.0
     ]);
   }

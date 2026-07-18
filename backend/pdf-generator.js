@@ -80,18 +80,26 @@ function generateQuotePdf(quote, res = null, filePath = null) {
     };
 
 
-    const fontPathRegular = resolveFont('Roboto-Regular');
-    const fontPathBold = resolveFont('Roboto-Bold');
-    const fontPathItalic = resolveFont('Roboto-Italic');
+    const fontPathSpaced = resolveFont('Spaced-Regular', '.otf');
+    const fontPathRegular = resolveFont('ProductSans-Regular');
+    const fontPathBold = resolveFont('ProductSans-Bold');
+    const fontPathItalic = resolveFont('ProductSans-Italic');
+    const fontPathBoldItalic = resolveFont('ProductSans-BoldItalic');
 
-    if (fontPathRegular) doc.registerFont('Roboto', fontPathRegular);
-    else doc.registerFont('Roboto', 'Helvetica');
+    if (fontPathSpaced) doc.registerFont('Spaced', fontPathSpaced);
+    else doc.registerFont('Spaced', 'Helvetica');
 
-    if (fontPathBold) doc.registerFont('Roboto-Bold', fontPathBold);
-    else doc.registerFont('Roboto-Bold', 'Helvetica-Bold');
+    if (fontPathRegular) doc.registerFont('ProductSans', fontPathRegular);
+    else doc.registerFont('ProductSans', 'Helvetica');
 
-    if (fontPathItalic) doc.registerFont('Roboto-Italic', fontPathItalic);
-    else doc.registerFont('Roboto-Italic', 'Helvetica-Oblique');
+    if (fontPathBold) doc.registerFont('ProductSans-Bold', fontPathBold);
+    else doc.registerFont('ProductSans-Bold', 'Helvetica-Bold');
+
+    if (fontPathItalic) doc.registerFont('ProductSans-Italic', fontPathItalic);
+    else doc.registerFont('ProductSans-Italic', 'Helvetica-Oblique');
+
+    if (fontPathBoldItalic) doc.registerFont('ProductSans-BoldItalic', fontPathBoldItalic);
+    else doc.registerFont('ProductSans-BoldItalic', 'Helvetica-BoldOblique');
 
     // Colors
     const brandBlue = '#0f4c81';      // Primary template blue
@@ -119,12 +127,12 @@ function generateQuotePdf(quote, res = null, filePath = null) {
     
     // Top Bar text and icons
     drawIcon(doc, ICONS.phone, 50, 9, 12, '#ffffff');
-    doc.fillColor('#ffffff').font('Roboto-Bold').fontSize(10).text('+91 94226 95021', 68, 10);
+    doc.fillColor('#ffffff').font('ProductSans-Bold').fontSize(10).text('+91 94226 95021', 68, 10);
     
     doc.moveTo(175, 8).lineTo(175, 22).strokeColor('#88aacc').lineWidth(1).stroke();
 
     drawIcon(doc, ICONS.envelope, 190, 9, 12, '#ffffff');
-    doc.fillColor('#ffffff').font('Roboto').fontSize(10).text('info@seetechsolutions.in', 210, 10);
+    doc.fillColor('#ffffff').font('ProductSans').fontSize(10).text('info@seetechsolutions.in', 210, 10);
 
     // 2. BRANDING / LOGO SECTION
     const logoPath = resolveLogo();
@@ -144,20 +152,20 @@ function generateQuotePdf(quote, res = null, filePath = null) {
          .lineWidth(2.5).strokeColor(primaryColor).stroke();
       doc.restore();
 
-      doc.fillColor(brandGreen).font('Roboto-Bold').fontSize(26).text('SEETECH', 95, 52);
-      doc.fillColor('#475569').font('Roboto-Bold').fontSize(15).text('S O L U T I O N', 95, 77);
+      doc.fillColor(brandGreen).font('Spaced').fontSize(26).text('SEETECH', 95, 52);
+      doc.fillColor('#475569').font('Spaced').fontSize(15).text('S O L U T I O N', 95, 77);
       doc.moveTo(95, 96).lineTo(250, 96).strokeColor(brandGreen).lineWidth(1.5).stroke();
-      doc.fillColor('#64748b').font('Roboto-Italic').fontSize(9.5).text('energy savings delivered...', 108, 101);
+      doc.fillColor('#64748b').font('ProductSans-Italic').fontSize(9.5).text('energy savings delivered...', 108, 101);
     }
 
     // Right Quotation Headers
-    doc.fillColor(brandBlue).font('Roboto-Bold').fontSize(22).text('QUOTATION', 400, 52, { align: 'right' });
+    doc.fillColor(brandBlue).font('Spaced').fontSize(22).text('QUOTATION', 400, 52, { align: 'right' });
     
-    doc.fillColor(primaryColor).font('Roboto-Bold').fontSize(10.5).text('Quote #:', 310, 85, { width: 130, align: 'right' });
-    doc.fillColor(brandBlue).font('Roboto-Bold').fontSize(10.5).text(quoteNum, 450, 85, { width: 95, align: 'left' });
+    doc.fillColor(primaryColor).font('ProductSans-Bold').fontSize(10.5).text('Quote #:', 310, 85, { width: 130, align: 'right' });
+    doc.fillColor(brandBlue).font('ProductSans-Bold').fontSize(10.5).text(quoteNum, 450, 85, { width: 95, align: 'left' });
 
-    doc.fillColor(primaryColor).font('Roboto-Bold').fontSize(10.5).text('Date:', 310, 99, { width: 130, align: 'right' });
-    doc.fillColor(brandBlue).font('Roboto-Bold').fontSize(10.5).text(dateStr, 450, 99, { width: 95, align: 'left' });
+    doc.fillColor(primaryColor).font('ProductSans-Bold').fontSize(10.5).text('Date:', 310, 99, { width: 130, align: 'right' });
+    doc.fillColor(brandBlue).font('ProductSans-Bold').fontSize(10.5).text(dateStr, 450, 99, { width: 95, align: 'left' });
 
     // Divider line
     doc.moveTo(50, 125).lineTo(545, 125).strokeColor('#e2e8f0').lineWidth(1).stroke();
@@ -172,12 +180,12 @@ function generateQuotePdf(quote, res = null, filePath = null) {
     // Header for Prepared For
     doc.fillColor(brandBlue).rect(60, cardY + 10, 16, 16).fill();
     drawIcon(doc, ICONS.user, 62, cardY + 12, 12, '#ffffff');
-    doc.fillColor(brandBlue).font('Roboto-Bold').fontSize(10.5).text('PREPARED FOR:', 82, cardY + 14);
+    doc.fillColor(brandBlue).font('Spaced').fontSize(10.5).text('PREPARED FOR:', 82, cardY + 14);
 
     // Client Info details
-    doc.fillColor(primaryColor).font('Roboto-Bold').fontSize(11).text(quote.customer_name || 'N/A', 60, cardY + 36);
-    doc.fillColor(textColor).font('Roboto').fontSize(9.5).text(quote.site_address || 'N/A', 60, cardY + 52, { width: 215, lineGap: 2 });
-    doc.fillColor(textColor).font('Roboto').fontSize(9.5).text(`Contact: ${quote.contact_number || 'N/A'}`, 60, cardY + 86);
+    doc.fillColor(primaryColor).font('ProductSans-Bold').fontSize(11).text(quote.customer_name || 'N/A', 60, cardY + 36);
+    doc.fillColor(textColor).font('ProductSans').fontSize(9.5).text(quote.site_address || 'N/A', 60, cardY + 52, { width: 215, lineGap: 2 });
+    doc.fillColor(textColor).font('ProductSans').fontSize(9.5).text(`Contact: ${quote.contact_number || 'N/A'}`, 60, cardY + 86);
 
     // System Specifications Card
     doc.roundedRect(300, cardY, 245, cardHeight, 6).fill(brandLightGreen);
@@ -185,11 +193,11 @@ function generateQuotePdf(quote, res = null, filePath = null) {
     // Header for Specifications
     doc.fillColor(brandGreen).rect(310, cardY + 10, 16, 16).fill();
     drawIcon(doc, ICONS.cog, 312, cardY + 12, 12, '#ffffff');
-    doc.fillColor(brandGreen).font('Roboto-Bold').fontSize(10.5).text('SYSTEM SPECIFICATIONS:', 332, cardY + 14);
+    doc.fillColor(brandGreen).font('Spaced').fontSize(10.5).text('SYSTEM SPECIFICATIONS:', 332, cardY + 14);
 
     // Specifications details
     const inp = quote.inputSnapshot || {};
-    doc.fillColor(textColor).font('Roboto').fontSize(9.5);
+    doc.fillColor(textColor).font('ProductSans').fontSize(9.5);
     doc.text(`Dimensions: ${inp.W}W x ${inp.D}D x ${inp.H}H (mm)`, 310, cardY + 36);
     doc.text(`Pad Thickness: ${inp.thickness || 100} mm`, 310, cardY + 50);
     doc.text(`Face Configuration: ${inp.faceSelectionType} (${(inp.faces || []).join(', ')})`, 310, cardY + 64, { width: 225 });
@@ -204,14 +212,14 @@ function generateQuotePdf(quote, res = null, filePath = null) {
     // Header for Cost Summary Section
     doc.fillColor(brandBlue).rect(50, currentY, 16, 16).fill();
     drawIcon(doc, ICONS.document, 52, currentY + 2, 12, '#ffffff');
-    doc.fillColor(brandBlue).font('Roboto-Bold').fontSize(11).text('COST SUMMARY', 72, currentY + 4);
+    doc.fillColor(brandBlue).font('Spaced').fontSize(11).text('COST SUMMARY', 72, currentY + 4);
 
     const tableTop = currentY + 22;
     const headerHeight = 22;
 
     // Draw main Table Header
     doc.rect(50, tableTop, 495, headerHeight).fill(brandBlue);
-    doc.fillColor('#ffffff').font('Roboto-Bold').fontSize(9.5);
+    doc.fillColor('#ffffff').font('ProductSans-Bold').fontSize(9.5);
     doc.text('Item Description', 60, tableTop + 7);
     doc.text('Qty', 305, tableTop + 7, { width: 35, align: 'center' });
     doc.text('Unit Price (₹)', 355, tableTop + 7, { width: 85, align: 'right' });
@@ -233,7 +241,7 @@ function generateQuotePdf(quote, res = null, filePath = null) {
     let rowY = tableTop + headerHeight;
     const rowHeight = 20;
 
-    doc.font('Roboto').fontSize(9).fillColor(textColor);
+    doc.font('ProductSans').fontSize(9).fillColor(textColor);
 
     items.forEach((item, index) => {
       // Background shading
@@ -270,12 +278,12 @@ function generateQuotePdf(quote, res = null, filePath = null) {
     doc.rect(290, rowY + 6, 140, 24).fill(brandBlue);
     doc.rect(430, rowY + 6, 115, 24).fill(brandDarkGreen);
 
-    doc.fillColor('#ffffff').font('Roboto-Bold').fontSize(9.5)
+    doc.fillColor('#ffffff').font('ProductSans-Bold').fontSize(9.5)
        .text('GRAND TOTAL (INR)', 302, rowY + 13)
        .text(formatCurrency(out.grandTotal || 0), 435, rowY + 13, { width: 102, align: 'right' });
 
     // Validity Note below table
-    doc.fillColor(textColor).font('Roboto-Italic').fontSize(8.5)
+    doc.fillColor(textColor).font('ProductSans-Italic').fontSize(8.5)
        .text('* Quotation is valid for 30 days from the date of issue.', 50, rowY + 13);
 
     currentY = rowY + 45;
@@ -283,7 +291,7 @@ function generateQuotePdf(quote, res = null, filePath = null) {
     // 5. INTERNAL ENGINEERING MATERIALS LIST
     doc.fillColor(brandBlue).rect(50, currentY, 16, 16).fill();
     drawIcon(doc, ICONS.cog, 52, currentY + 2, 12, '#ffffff');
-    doc.fillColor(brandBlue).font('Roboto-Bold').fontSize(11).text('INTERNAL ENGINEERING MATERIALS LIST', 72, currentY + 4);
+    doc.fillColor(brandBlue).font('Spaced').fontSize(11).text('INTERNAL ENGINEERING MATERIALS LIST', 72, currentY + 4);
 
     const engBoxY = currentY + 22;
     const engBoxHeight = 158;
@@ -297,9 +305,9 @@ function generateQuotePdf(quote, res = null, filePath = null) {
 
     // Subheader: Cooling Pads Details
     drawIcon(doc, ICONS.grid, col1X, colTopY + 2, 10, brandGreen);
-    doc.fillColor(brandGreen).font('Roboto-Bold').fontSize(10).text('Cooling Pads Details:', col1X + 16, colTopY + 2);
+    doc.fillColor(brandGreen).font('Spaced').fontSize(10).text('Cooling Pads Details:', col1X + 16, colTopY + 2);
     
-    doc.fillColor(textColor).font('Roboto').fontSize(8.5);
+    doc.fillColor(textColor).font('ProductSans').fontSize(8.5);
     doc.text(`• Total pads: ${out.pads ? out.pads.totalPads : 0} sheet(s)`, col1X, colTopY + 17);
     doc.text(`• Details per selected face:`, col1X, colTopY + 27);
 
@@ -314,9 +322,9 @@ function generateQuotePdf(quote, res = null, filePath = null) {
     // Subheader: Pumps & Plumbing Sizing
     const pumpTopY = colTopY + 84;
     drawIcon(doc, ICONS.droplet, col1X, pumpTopY + 2, 10, brandBlue);
-    doc.fillColor(brandBlue).font('Roboto-Bold').fontSize(10).text('Pumps & Plumbing Sizing:', col1X + 16, pumpTopY + 2);
+    doc.fillColor(brandBlue).font('Spaced').fontSize(10).text('Pumps & Plumbing Sizing:', col1X + 16, pumpTopY + 2);
     
-    doc.fillColor(textColor).font('Roboto').fontSize(8.5);
+    doc.fillColor(textColor).font('ProductSans').fontSize(8.5);
     doc.text(`• Flow required: ${out.pumpPlumbing ? out.pumpPlumbing.requiredFlowLPH.toFixed(2) : 0} LPH`, col1X, pumpTopY + 17);
     doc.text(`• Selected Pump: ${out.pumpPlumbing && out.pumpPlumbing.selectedPump ? out.pumpPlumbing.selectedPump.modelName : 'N/A'}`, col1X, pumpTopY + 27);
     doc.text(`  (Capacity: ${out.pumpPlumbing && out.pumpPlumbing.selectedPump ? out.pumpPlumbing.selectedPump.capacityLPH : 0} LPH)`, col1X, pumpTopY + 37);
@@ -332,9 +340,9 @@ function generateQuotePdf(quote, res = null, filePath = null) {
     
     // Subheader: Metal & Frame Work
     drawIcon(doc, ICONS.box, col2X, colTopY + 2, 10, brandGreen);
-    doc.fillColor(brandGreen).font('Roboto-Bold').fontSize(10).text('Metal & Frame Work:', col2X + 16, colTopY + 2);
+    doc.fillColor(brandGreen).font('Spaced').fontSize(10).text('Metal & Frame Work:', col2X + 16, colTopY + 2);
 
-    doc.fillColor(textColor).font('Roboto').fontSize(8.5);
+    doc.fillColor(textColor).font('ProductSans').fontSize(8.5);
     doc.text(`• Outer frame bars: ${out.frame ? out.frame.barsNeeded : 0} pcs`, col2X, colTopY + 17);
     doc.text(`  - Total Length: ${out.frame ? out.frame.totalLength.toFixed(0) : 0} mm`, col2X, colTopY + 27);
     
@@ -346,7 +354,7 @@ function generateQuotePdf(quote, res = null, filePath = null) {
 
     // 6. FOOTER & DECORATIVE CORNER ACCENTS
     // Footer line
-    doc.fillColor('#94a3b8').font('Roboto').fontSize(8)
+    doc.fillColor('#94a3b8').font('ProductSans').fontSize(8)
        .text('Generated automatically by Adiabatic Cooling System Quotation Automation Tool', 50, 808, { align: 'center' });
 
     // Decorative Angled Corner Accent Bars at the bottom
