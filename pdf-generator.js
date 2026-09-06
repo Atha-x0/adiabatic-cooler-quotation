@@ -280,6 +280,12 @@ function generateQuotePdf(quote, res = null, filePath = null) {
 
     currentY = rowY + 45;
 
+    // Check if there is enough space on the current page for the materials list (approx 190 pt)
+    if (currentY + 190 > 780) {
+      doc.addPage();
+      currentY = 40;
+    }
+
     // 5. INTERNAL ENGINEERING MATERIALS LIST
     doc.fillColor(brandBlue).rect(50, currentY, 16, 16).fill();
     drawIcon(doc, ICONS.cog, 52, currentY + 2, 12, '#ffffff');

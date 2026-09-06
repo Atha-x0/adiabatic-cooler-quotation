@@ -191,15 +191,37 @@ function generateQuotePdf(quote, res = null, filePath = null) {
       currentY += 10;
     };
 
+    doc.on('pageAdded', () => {
+      currentY = 40;
+      drawHeader();
+    });
+
     drawHeader();
 
     // Client Details Section
     const drawClientDetails = () => {
       let clientY = currentY;
       
+      const contactVal = quote.contact_number || '';
+      let contactPerson = '';
+      let contactPhone = '';
+      if (contactVal.includes('|')) {
+        const parts = contactVal.split('|');
+        contactPerson = parts[0].trim();
+        contactPhone = parts[1].trim();
+      } else {
+        if (/[0-9]/.test(contactVal)) {
+          contactPhone = contactVal;
+        } else {
+          contactPerson = contactVal;
+        }
+      }
+
       drawFieldWithUnderline('Client Name', quote.customer_name || '', leftMargin, clientY, 110, 405);
       clientY += 14;
-      drawFieldWithUnderline('Contact Person', quote.contact_number || 'N/A', leftMargin, clientY, 110, 405);
+      drawFieldWithUnderline('Contact Person', contactPerson || 'N/A', leftMargin, clientY, 110, 405);
+      clientY += 14;
+      drawFieldWithUnderline('Contact Number', contactPhone || 'N/A', leftMargin, clientY, 110, 405);
       clientY += 14;
       drawFieldWithUnderline('Client Address', quote.site_address || '', leftMargin, clientY, 110, 405);
       clientY += 14;
@@ -300,8 +322,8 @@ function generateQuotePdf(quote, res = null, filePath = null) {
         });
 
         doc.addPage();
-        rowY = 40;
-        localTableTop = 40;
+        rowY = currentY;
+        localTableTop = currentY;
 
         // Draw header box on new page
         doc.rect(leftMargin, rowY, contentWidth, headerHeight).fill('#F2F2F2');
@@ -353,7 +375,6 @@ function generateQuotePdf(quote, res = null, filePath = null) {
     // Check space for totals box
     if (currentY > 675) {
       doc.addPage();
-      currentY = 40;
     }
 
     const totalTaxableVal = totalGrossAmount;
@@ -395,7 +416,6 @@ function generateQuotePdf(quote, res = null, filePath = null) {
       
       if (currentY > 740) {
         doc.addPage();
-        currentY = 40;
       }
 
       doc.fillColor('#1A1A1A').font('Roboto-Bold').fontSize(9).text(title, leftMargin, currentY);
@@ -412,7 +432,6 @@ function generateQuotePdf(quote, res = null, filePath = null) {
           
           if (currentY + lineHeight > 780) {
             doc.addPage();
-            currentY = 40;
           }
           
           doc.fillColor('#333333').font('Roboto').fontSize(8.5).text(line.trim(), leftMargin, currentY, { 
@@ -438,9 +457,12 @@ function generateQuotePdf(quote, res = null, filePath = null) {
     ].join('\n\n');
     renderContentBlock('Terms & Conditions:', numberedTermsText);
 
-    // Render Chiller Internal Engineering Specifications (on page 2)
-    doc.addPage();
-    currentY = 40;
+    // Render Chiller Internal Engineering Specifications (on page 1 if space allows, otherwise page 2)
+    if (currentY + 190 > 780) {
+      doc.addPage();
+    } else {
+      currentY += 15;
+    }
 
     doc.fillColor('#1b4c80').rect(50, currentY, 16, 16).fill();
     drawIcon(doc, ICONS.cog, 52, currentY + 2, 12, '#ffffff');
@@ -506,7 +528,7 @@ function generateQuotePdf(quote, res = null, filePath = null) {
     doc.text(`  - Total Plate Area: ${out.plates ? out.plates.totalArea.toFixed(0) : 0} mm²`, col2X, colTopY + 75);
 
     // Push footer to bottom of current page
-    const footerY = 780;
+    const footerY = 760;
     doc.moveTo(leftMargin, footerY - 5).lineTo(595.28 - rightMargin, footerY - 5).strokeColor('#CCCCCC').lineWidth(0.5).stroke();
 
     doc.fillColor('#1A1A1A').font('Roboto-Bold').fontSize(9).text('Thank you for your business!', leftMargin, footerY, { width: contentWidth, align: 'center' });
