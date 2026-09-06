@@ -5,7 +5,7 @@ const path = require('path');
 /**
  * Helper to draw SVG paths for icons
  */
-function drawIcon(doc, pathStr, x, y, size = 12, fillColor = '#000000') {
+function drawIcon(doc, pathStr, x, y, size = 8, fillColor = '#1A1A1A') {
   doc.save();
   doc.translate(x, y);
   const scale = size / 16; // Icons designed on a 16x16 grid
@@ -14,30 +14,39 @@ function drawIcon(doc, pathStr, x, y, size = 12, fillColor = '#000000') {
   doc.restore();
 }
 
-// Icon path constants
 const ICONS = {
-  phone: 'M3 0 C1.5 0 0 1.5 0 3 C0 8.5 4.5 13 10 13 C11.5 13 13 11.5 13 10 L11 8 C10.5 7.5 9.5 7.5 9 8 L8 9 C6 8 5 7 4 5 L5 4 C5.5 3.5 5.5 2.5 5 2 L3 0 Z',
-  envelope: 'M0 2 L0 12 L16 12 L16 2 Z M2 4 L8 8 L14 4 Z M2 5.5 L5.5 8 L2 10.5 Z M14 5.5 L14 10.5 L10.5 8 Z M6.5 8.7 L8 9.7 L9.5 8.7 L13 11.5 L3 11.5 Z',
-  user: 'M8 0 C10.2 0 12 1.8 12 4 C12 6.2 10.2 8 8 8 C5.8 8 4 6.2 4 4 C4 1.8 5.8 0 8 0 Z M2 14 C2 10.5 5 10 8 10 C11 10 14 10.5 14 14 Z',
+  mapPin: 'M8 0C3.58 0 0 3.58 0 8c0 5.25 8 16 8 16s8-10.75 8-16c0-4.42-3.58-8-8-8zm0 11c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z',
+  phone: 'M3.62 1.03c.53.53.94 1.18 1.25 1.86.13.29.07.63-.15.86l-.86.86c.64 1.37 1.76 2.49 3.13 3.13l.86-.86c.23-.23.57-.28.86-.15.68.31 1.33.72 1.86 1.25.39.39.41 1.02.05 1.43l-1.3 1.3c-.56.56-1.46.67-2.14.28-2.61-1.48-4.73-3.6-6.21-6.21-.39-.68-.28-1.58.28-2.14l1.3-1.3c.41-.36 1.04-.34 1.43.05z',
+  envelope: 'M0 2a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H2a2 2 0 01-2-2V2zm2 1.6V14h12V3.6L8 8.4 2 3.6zM8 6.6L13.8 2H2.2L8 6.6z',
+  globe: 'M8 0a8 8 0 100 16A8 8 0 008 0zm0 1.5c1.17 0 2.26.33 3.19.89L9.61 4H6.39L4.81 2.39A6.47 6.47 0 018 1.5zM3.46 3.13L5.04 5h5.92l1.58-1.87A6.45 6.45 0 0114.27 8h-2.18c-.28-1.78-1.07-3.32-2.19-4.43A6.46 6.46 0 0113.1 6.5h-1.57a4.97 4.97 0 00-.73-2.19c-.43.76-.94 1.45-1.5 2.05L8.5 7.17v5.66l.8-1.2c.56.6 1.07 1.29 1.5 2.05.3-.65.55-1.38.73-2.19h1.57a6.46 6.46 0 01-3.26 3.16c1.12-1.11 1.91-2.65 2.19-4.43h2.18a6.45 6.45 0 01-1.68 3.51M8.5 1.52v5.15L9.19 6h-2.38L7.5 6.67v5.66L6.81 10h2.38L8.5 1.52zm-.69 11.31l-.8 1.2a4.97 4.97 0 00-.73-2.19c-.43.76-.94 1.45-1.5 2.05L3.46 12.87a6.45 6.45 0 011.68-3.51h2.18c.28 1.78 1.07 3.32 2.19 4.43a6.46 6.46 0 01-3.26-3.16h-1.57c.18.81.43 1.54.73 2.19-.56-.6-1.07-1.29-1.5-2.05l-.8 1.2v-.01z',
   cog: 'M8 6 C6.9 6 6 6.9 6 8 C6 9.1 6.9 10 8 10 C9.1 10 10 9.1 10 8 C10 6.9 9.1 6 8 6 Z M8 1 C7.5 1 7.1 1.3 7 1.8 L6.7 3 C6.1 3.2 5.6 3.5 5.1 3.9 L4 3.1 C3.6 2.8 3.1 2.9 2.8 3.3 L1.3 5.9 C1.1 6.3 1.2 6.8 1.6 7.1 L2.6 7.9 C2.5 8.2 2.5 8.5 2.6 8.8 L1.6 9.6 C1.2 9.9 1.1 10.4 1.3 10.8 L2.8 13.4 C3.1 13.8 3.6 13.9 4.0 13.6 L5.1 12.8 C5.6 13.2 6.1 13.5 6.7 13.7 L7.0 14.9 C7.1 15.4 7.5 15.7 8.0 15.7 C8.5 15.7 8.9 15.4 9.0 14.9 L9.3 13.7 C9.9 13.5 10.4 13.2 10.9 12.8 L12.0 13.6 C12.4 13.9 12.9 13.8 13.2 13.4 L14.7 10.8 C14.9 10.4 14.8 9.9 14.4 9.6 L13.4 8.8 C13.5 8.5 13.5 8.2 13.4 7.9 L14.4 7.1 C14.8 6.8 14.9 6.3 14.7 5.9 L13.2 3.3 C12.9 2.9 12.4 2.8 12.0 3.1 L10.9 3.9 C10.4 3.5 9.9 3.2 9.3 3.0 L9.0 1.8 C8.9 1.3 8.5 1 8.0 1 Z',
   droplet: 'M8 0 C8 0 2 6 2 10.5 C2 13.5 4.7 16 8 16 C11.3 16 14 13.5 14 10.5 C14 6 8 0 8 0 Z',
-  document: 'M2 0 L10 0 L14 4 L14 16 L2 16 Z M3 2 L9 2 L9 5 L12 5 L12 15 L3 15 Z M5 7 L11 7 M5 10 L11 10 M5 13 L9 13',
   grid: 'M1 1 H3 V3 H1 Z M6 1 H8 V3 H6 Z M11 1 H13 V3 H11 Z M1 6 H3 V8 H1 Z M6 6 H8 V8 H6 Z M11 6 H13 V8 H11 Z M1 11 H3 V13 H1 Z M6 11 H8 V13 H6 Z M11 11 H13 V13 H11 Z',
   box: 'M1 4 L8 1 L15 4 L15 12 L8 15 L1 12 Z M8 1.5 L14 3.8 L8 6.1 L2 3.8 Z M8 6.8 L14 4.5 L14 11.2 L8 13.9 Z M2 4.5 L8 6.8 L8 13.9 L2 11.2 Z'
 };
 
-/**
- * Generate a PDF quotation and write it to the response stream or file system.
- * @param {object} quote - The quotation record from the database
- * @param {object} res - Express response stream (optional)
- * @param {string} filePath - Local file path to save to (optional)
- */
+function numberToWords(num) {
+  const a = ['', 'one ', 'two ', 'three ', 'four ', 'five ', 'six ', 'seven ', 'eight ', 'nine ', 'ten ', 'eleven ', 'twelve ', 'thirteen ', 'fourteen ', 'fifteen ', 'sixteen ', 'seventeen ', 'eighteen ', 'nineteen '];
+  const b = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+
+  if ((num = Math.floor(num)) === 0) return 'zero';
+  const n = ('000000000' + num).substr(-9).match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
+  if (!n) return '';
+  let str = '';
+  str += Number(n[1]) != 0 ? (a[Number(n[1])] || b[n[1][0]] + ' ' + a[n[1][1]]) + 'crore ' : '';
+  str += Number(n[2]) != 0 ? (a[Number(n[2])] || b[n[2][0]] + ' ' + a[n[2][1]]) + 'lakh ' : '';
+  str += Number(n[3]) != 0 ? (a[Number(n[3])] || b[n[3][0]] + ' ' + a[n[3][1]]) + 'thousand ' : '';
+  str += Number(n[4]) != 0 ? (a[Number(n[4])] || b[n[4][0]] + ' ' + a[n[4][1]]) + 'hundred ' : '';
+  str += Number(n[5]) != 0 ? ((str != '') ? 'and ' : '') + (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) : '';
+  return str.trim() + ' rupees only';
+}
+
 function generateQuotePdf(quote, res = null, filePath = null) {
   return new Promise((resolve, reject) => {
-    // Standard A4: 595.28 x 841.89
-    const doc = new PDFDocument({ size: 'A4', margin: 0 });
+    // A4: 595.28 x 841.89 pt
+    const doc = new PDFDocument({ size: 'A4', margin: 40 });
 
-    let writeStream;
+    let writeStream = null;
     if (filePath) {
       const dir = path.dirname(filePath);
       if (!fs.existsSync(dir)) {
@@ -51,14 +60,16 @@ function generateQuotePdf(quote, res = null, filePath = null) {
       doc.pipe(res);
     }
 
-    // Register Google Fonts (Roboto) - look in local and backend folders
+    // Resolve fonts
     const resolveFont = (basename, ext = '.ttf') => {
       const filenames = [`${basename}-v2${ext}`, `${basename}${ext}`];
       for (const filename of filenames) {
         const paths = [
           path.join(__dirname, 'fonts', filename),
-          path.join(__dirname, 'backend', 'fonts', filename),
-          path.join(__dirname, '..', 'fonts', filename)
+          path.join(__dirname, '..', 'fonts', filename),
+          path.join(__dirname, '..', '..', 'fonts', filename),
+          path.join(process.cwd(), 'fonts', filename),
+          path.join(process.cwd(), 'apps', 'backend', 'fonts', filename)
         ];
         for (const p of paths) {
           if (fs.existsSync(p)) return p;
@@ -67,247 +78,389 @@ function generateQuotePdf(quote, res = null, filePath = null) {
       return null;
     };
 
-    const resolveLogo = () => {
-      const paths = [
-        path.join(__dirname, 'seetech-logo.png'),
-        path.join(__dirname, 'backend', 'seetech-logo.png'),
-        path.join(__dirname, '..', 'seetech-logo.png')
-      ];
-      for (const p of paths) {
-        if (fs.existsSync(p)) return p;
+    const fontPathRegular = resolveFont('Roboto-Regular');
+    const fontPathBold = resolveFont('Roboto-Bold');
+    const fontPathItalic = resolveFont('Roboto-Italic');
+
+    if (fontPathRegular) doc.registerFont('Roboto', fontPathRegular);
+    else doc.registerFont('Roboto', 'Helvetica');
+
+    if (fontPathBold) doc.registerFont('Roboto-Bold', fontPathBold);
+    else doc.registerFont('Roboto-Bold', 'Helvetica-Bold');
+
+    if (fontPathItalic) doc.registerFont('Roboto-Italic', fontPathItalic);
+    else doc.registerFont('Roboto-Italic', 'Helvetica-Oblique');
+
+    // Page margins and setup
+    const leftMargin = 40;
+    const rightMargin = 40;
+    const contentWidth = 595.28 - (leftMargin + rightMargin); // 515.28
+    let currentY = 40;
+
+    // Helper to draw clean lines representing user input fields
+    const drawFieldLine = (startX, endX, y) => {
+      doc.moveTo(startX, y).lineTo(endX, y).strokeColor('#CCCCCC').lineWidth(0.5).stroke();
+    };
+
+    // Helper to write text with an underline
+    const drawFieldWithUnderline = (label, value, x, y, labelWidth, valueWidth) => {
+      doc.fillColor('#1A1A1A').font('Roboto-Bold').fontSize(8.5).text(label, x, y, { width: labelWidth });
+      doc.fillColor('#1A1A1A').font('Roboto-Bold').fontSize(8.5).text(':', x + labelWidth - 8, y);
+      doc.fillColor('#333333').font('Roboto').fontSize(8.5).text(value || '', x + labelWidth, y, { width: valueWidth });
+      drawFieldLine(x + labelWidth, x + labelWidth + valueWidth, y + 10);
+    };
+
+    // Header drawing function
+    const drawHeader = () => {
+      // Left Logo Section
+      let logoPath = path.join(process.cwd(), 'seetech-logo.png');
+      if (!fs.existsSync(logoPath)) {
+        logoPath = path.join(__dirname, '..', '..', 'seetech-logo.png');
       }
-      return null;
+      
+      if (fs.existsSync(logoPath)) {
+        doc.image(logoPath, leftMargin, currentY + 5, { width: 145 });
+      } else {
+        doc.fillColor('#3ba846').font('Roboto-Bold').fontSize(24).text('SEE', leftMargin, currentY, { continued: true });
+        doc.fillColor('#2d5ca6').font('Roboto-Bold').fontSize(24).text(' TECH');
+        doc.fillColor('#1A1A1A').font('Roboto-Bold').fontSize(9.5).text('SYSTEMS PVT. LTD.', leftMargin, currentY + 28);
+        doc.moveTo(leftMargin, currentY + 42).lineTo(leftMargin + 150, currentY + 42).strokeColor('#3ba846').lineWidth(1.5).stroke();
+        doc.fillColor('#666666').font('Roboto-Italic').fontSize(7.5).text('energy savings delivered...', leftMargin, currentY + 47);
+      }
+
+      // Vertical Divider
+      doc.moveTo(205, currentY).lineTo(205, currentY + 60).strokeColor('#CCCCCC').lineWidth(0.5).stroke();
+
+      // Middle Company Info Section
+      let midX = 215;
+      let midY = currentY;
+      
+      // Address Row
+      drawIcon(doc, ICONS.mapPin, midX, midY + 1, 8, '#3ba846');
+      doc.fillColor('#333333').font('Roboto').fontSize(7.5).text(
+        '11/5, IT Park, S Ambazari Rd,\nOpposite VNIT, Nagpur, Maharashtra 440022',
+        midX + 12,
+        midY,
+        { width: 140, lineGap: 1 }
+      );
+
+      const addressHeight = doc.heightOfString(
+        '11/5, IT Park, S Ambazari Rd,\nOpposite VNIT, Nagpur, Maharashtra 440022',
+        { width: 140, lineGap: 1 }
+      );
+
+      // Phone Row
+      let phoneY = midY + addressHeight + 3;
+      drawIcon(doc, ICONS.phone, midX, phoneY + 1, 8, '#3ba846');
+      doc.fillColor('#333333').font('Roboto').fontSize(7.5).text('+91 9422145534', midX + 12, phoneY);
+
+      // Email Row
+      let emailY = phoneY + 12;
+      drawIcon(doc, ICONS.envelope, midX, emailY + 1, 8, '#3ba846');
+      doc.fillColor('#333333').font('Roboto').fontSize(7.5).text('info@seetechsolutions.in', midX + 12, emailY);
+
+      // Website Row
+      let webY = emailY + 12;
+      drawIcon(doc, ICONS.globe, midX, webY + 1, 8, '#3ba846');
+      doc.fillColor('#333333').font('Roboto').fontSize(7.5).text('www.seetechsolutions.in', midX + 12, webY);
+
+      // Vertical Divider
+      let dividerHeight = Math.max(60, (webY + 8) - currentY);
+      doc.moveTo(205, currentY).lineTo(205, currentY + dividerHeight).strokeColor('#CCCCCC').lineWidth(0.5).stroke();
+
+      // Right Section: Quotation Details
+      let rightX = 370;
+      let rightY = currentY;
+
+      doc.fillColor('#1A1A1A').font('Roboto-Bold').fontSize(18).text('QUOTATION', rightX, rightY, { width: contentWidth - (rightX - leftMargin), align: 'left' });
+
+      const dateStr = new Date(quote.created_at || Date.now()).toLocaleDateString('en-IN');
+      const quoteNum = quote.quotation_no || `QT-${new Date(quote.created_at || Date.now()).toISOString().slice(0, 10).replace(/-/g, '')}-${String(quote.id).padStart(4, '0')}`;
+      const validityStr = quote.validity_date ? new Date(quote.validity_date).toLocaleDateString('en-IN') : new Date(Date.now() + 10 * 24 * 60 * 60 * 1000).toLocaleDateString('en-IN');
+
+      let fieldY = rightY + 24;
+      drawFieldWithUnderline('Quotation No.', quoteNum, rightX, fieldY, 65, 80);
+      drawFieldWithUnderline('Date', dateStr, rightX, fieldY + 14, 65, 80);
+      drawFieldWithUnderline('Valid Until', validityStr, rightX, fieldY + 28, 65, 80);
+      drawFieldWithUnderline('Prepared By', 'SEETECH Solutions', rightX, fieldY + 42, 65, 80);
+
+      currentY += 88;
+      
+      // Bottom divider line
+      doc.moveTo(leftMargin, currentY).lineTo(595.28 - rightMargin, currentY).strokeColor('#1A1A1A').lineWidth(1).stroke();
+      currentY += 10;
     };
 
+    drawHeader();
 
-    const fontPathSpaced = resolveFont('Spaced-Regular', '.otf');
-    const fontPathRegular = resolveFont('ProductSans-Regular');
-    const fontPathBold = resolveFont('ProductSans-Bold');
-    const fontPathItalic = resolveFont('ProductSans-Italic');
-    const fontPathBoldItalic = resolveFont('ProductSans-BoldItalic');
+    // Client Details Section
+    const drawClientDetails = () => {
+      let clientY = currentY;
+      
+      drawFieldWithUnderline('Client Name', quote.customer_name || '', leftMargin, clientY, 110, 405);
+      clientY += 14;
+      drawFieldWithUnderline('Contact Person', quote.contact_number || 'N/A', leftMargin, clientY, 110, 405);
+      clientY += 14;
+      drawFieldWithUnderline('Client Address', quote.site_address || '', leftMargin, clientY, 110, 405);
+      clientY += 14;
+      drawFieldWithUnderline('Subject / Reference', 'Supply of Adiabatic Cooling Sizing Slabs / Frame Work', leftMargin, clientY, 110, 405);
 
-    if (fontPathSpaced) doc.registerFont('Spaced', fontPathSpaced);
-    else doc.registerFont('Spaced', 'Helvetica');
-
-    if (fontPathRegular) doc.registerFont('ProductSans', fontPathRegular);
-    else doc.registerFont('ProductSans', 'Helvetica');
-
-    if (fontPathBold) doc.registerFont('ProductSans-Bold', fontPathBold);
-    else doc.registerFont('ProductSans-Bold', 'Helvetica-Bold');
-
-    if (fontPathItalic) doc.registerFont('ProductSans-Italic', fontPathItalic);
-    else doc.registerFont('ProductSans-Italic', 'Helvetica-Oblique');
-
-    if (fontPathBoldItalic) doc.registerFont('ProductSans-BoldItalic', fontPathBoldItalic);
-    else doc.registerFont('ProductSans-BoldItalic', 'Helvetica-BoldOblique');
-
-    // Colors
-    const brandBlue = '#0f4c81';      // Primary template blue
-    const brandLightBlue = '#f0f7ff'; // Light card blue
-    const brandGreen = '#009639';     // Logo green
-    const brandLightGreen = '#f0fdf4';// Light card green
-    const brandDarkGreen = '#10b981'; // Grand Total background green
-    
-    const primaryColor = '#1e293b';  // Text dark Slate 800
-    const textColor = '#334155';     // Slate 700
-    const lightBg = '#f8fafc';       // Zebra rows / background
-    const borderColor = '#cbd5e1';   // Slate 300
-    const borderLight = '#e2e8f0';   // Table inner borders
-
-    // Formatting date & numbers
-    const dateStr = new Date(quote.created_at || Date.now()).toLocaleDateString('en-IN');
-    const quoteNum = quote.quote_number || `Q-${new Date(quote.created_at || Date.now()).toISOString().slice(0, 10).replace(/-/g, '')}-${String(quote.id).padStart(4, '0')}`;
-
-    const formatCurrency = (val) => {
-      return '₹' + Number(val).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      currentY = clientY + 14;
     };
 
-    // 1. TOP HEADER BANNER
-    doc.rect(0, 0, 595, 30).fill(brandBlue);
+    drawClientDetails();
+
+    // Items Table Redesign
+    const tableTop = currentY;
+    const headerHeight = 18;
+
+    // Draw main Table Header box
+    doc.rect(leftMargin, tableTop, contentWidth, headerHeight).fill('#F2F2F2');
+    doc.rect(leftMargin, tableTop, contentWidth, headerHeight).strokeColor('#CCCCCC').lineWidth(0.5).stroke();
     
-    // Top Bar text and icons
-    drawIcon(doc, ICONS.phone, 50, 9, 12, '#ffffff');
-    doc.fillColor('#ffffff').font('ProductSans-Bold').fontSize(10).text('+91 94226 95021', 68, 10);
-    
-    doc.moveTo(175, 8).lineTo(175, 22).strokeColor('#88aacc').lineWidth(1).stroke();
+    const colX = {
+      sl: leftMargin, // 40
+      name: leftMargin + 25, // 65
+      desc: leftMargin + 115, // 155
+      hsn: leftMargin + 225, // 265
+      qty: leftMargin + 285, // 325
+      unit: leftMargin + 320, // 360
+      rate: leftMargin + 355, // 395
+      discount: leftMargin + 405, // 445
+      amount: leftMargin + 450 // 490
+    };
 
-    drawIcon(doc, ICONS.envelope, 190, 9, 12, '#ffffff');
-    doc.fillColor('#ffffff').font('ProductSans').fontSize(10).text('info@seetechsolutions.in', 210, 10);
+    const colWidths = {
+      sl: 25,
+      name: 90,
+      desc: 110,
+      hsn: 60,
+      qty: 35,
+      unit: 35,
+      rate: 50,
+      discount: 45,
+      amount: 65.28
+    };
 
-    // 2. BRANDING / LOGO SECTION
-    const logoPath = resolveLogo();
-    if (logoPath) {
-      doc.image(logoPath, 50, 42, { width: 220 });
-    } else {
-      // Seetech Solutions Logo (vector reproduction fallback)
-      const logoX = 50;
-      const logoY = 50;
-      doc.save();
-      doc.translate(logoX + 20, logoY + 25);
-      doc.path('M -18 -8 C -15 -18, -3 -22, 8 -18 C 15 -14, 18 -5, 15 4 C 13 10, 7 14, 0 15')
-         .lineWidth(3).strokeColor(brandGreen).stroke();
-      doc.path('M -8 12 C -15 8, -17 -2, -12 -10 C -8 -15, 0 -17, 7 -12 C 12 -8, 11 0, 7 4')
-         .lineWidth(3).strokeColor(brandBlue).stroke();
-      doc.path('M -4 -8 C -2 -11, 2 -11, 4 -8 C 5 -5, 1 -3, -1 0 C -4 3, -4 7, -1 10 C 2 12, 6 11, 7 8')
-         .lineWidth(2.5).strokeColor(primaryColor).stroke();
-      doc.restore();
+    doc.fillColor('#1A1A1A').font('Roboto-Bold').fontSize(8);
+    doc.text('Sr. No.', colX.sl, tableTop + 5, { width: colWidths.sl, align: 'center' });
+    doc.text('Item Name', colX.name + 3, tableTop + 5, { width: colWidths.name - 3 });
+    doc.text('Description', colX.desc + 3, tableTop + 5, { width: colWidths.desc - 3 });
+    doc.text('HSN/SAC Code', colX.hsn, tableTop + 5, { width: colWidths.hsn, align: 'center' });
+    doc.text('QTY', colX.qty, tableTop + 5, { width: colWidths.qty, align: 'center' });
+    doc.text('Unit', colX.unit, tableTop + 5, { width: colWidths.unit, align: 'center' });
+    doc.text('Rate (₹)', colX.rate, tableTop + 5, { width: colWidths.rate, align: 'right' });
+    doc.text('Discount', colX.discount, tableTop + 5, { width: colWidths.discount, align: 'right' });
+    doc.text('Total Amount (₹)', colX.amount, tableTop + 5, { width: colWidths.amount - 2, align: 'right' });
 
-      doc.fillColor(brandGreen).font('Spaced').fontSize(26).text('SEETECH', 95, 52);
-      doc.fillColor('#475569').font('Spaced').fontSize(15).text('S O L U T I O N', 95, 77);
-      doc.moveTo(95, 96).lineTo(250, 96).strokeColor(brandGreen).lineWidth(1.5).stroke();
-      doc.fillColor('#64748b').font('ProductSans-Italic').fontSize(9.5).text('energy savings delivered...', 108, 101);
-    }
-
-    // Right Quotation Headers
-    doc.fillColor(brandBlue).font('Spaced').fontSize(22).text('QUOTATION', 400, 52, { align: 'right' });
-    
-    doc.fillColor(primaryColor).font('ProductSans-Bold').fontSize(10.5).text('Quote #:', 310, 85, { width: 130, align: 'right' });
-    doc.fillColor(brandBlue).font('ProductSans-Bold').fontSize(10.5).text(quoteNum, 450, 85, { width: 95, align: 'left' });
-
-    doc.fillColor(primaryColor).font('ProductSans-Bold').fontSize(10.5).text('Date:', 310, 99, { width: 130, align: 'right' });
-    doc.fillColor(brandBlue).font('ProductSans-Bold').fontSize(10.5).text(dateStr, 450, 99, { width: 95, align: 'left' });
-
-    // Divider line
-    doc.moveTo(50, 125).lineTo(545, 125).strokeColor('#e2e8f0').lineWidth(1).stroke();
-
-    // 3. CLIENT & SYSTEM SPECIFICATIONS CARDS
-    const cardY = 138;
-    const cardHeight = 105;
-
-    // Prepared For Card
-    doc.roundedRect(50, cardY, 235, cardHeight, 6).fill(brandLightBlue);
-    
-    // Header for Prepared For
-    doc.fillColor(brandBlue).rect(60, cardY + 10, 16, 16).fill();
-    drawIcon(doc, ICONS.user, 62, cardY + 12, 12, '#ffffff');
-    doc.fillColor(brandBlue).font('Spaced').fontSize(10.5).text('PREPARED FOR:', 82, cardY + 14);
-
-    // Client Info details
-    doc.fillColor(primaryColor).font('ProductSans-Bold').fontSize(11).text(quote.customer_name || 'N/A', 60, cardY + 36);
-    doc.fillColor(textColor).font('ProductSans').fontSize(9.5).text(quote.site_address || 'N/A', 60, cardY + 52, { width: 215, lineGap: 2 });
-    doc.fillColor(textColor).font('ProductSans').fontSize(9.5).text(`Contact: ${quote.contact_number || 'N/A'}`, 60, cardY + 86);
-
-    // System Specifications Card
-    doc.roundedRect(300, cardY, 245, cardHeight, 6).fill(brandLightGreen);
-
-    // Header for Specifications
-    doc.fillColor(brandGreen).rect(310, cardY + 10, 16, 16).fill();
-    drawIcon(doc, ICONS.cog, 312, cardY + 12, 12, '#ffffff');
-    doc.fillColor(brandGreen).font('Spaced').fontSize(10.5).text('SYSTEM SPECIFICATIONS:', 332, cardY + 14);
-
-    // Specifications details
-    const inp = quote.inputSnapshot || {};
-    doc.fillColor(textColor).font('ProductSans').fontSize(9.5);
-    doc.text(`Dimensions: ${inp.W}W x ${inp.D}D x ${inp.H}H (mm)`, 310, cardY + 36);
-    doc.text(`Pad Thickness: ${inp.thickness || 100} mm`, 310, cardY + 50);
-    doc.text(`Face Configuration: ${inp.faceSelectionType} (${(inp.faces || []).join(', ')})`, 310, cardY + 64, { width: 225 });
-
-    // Inner green card divider
-    doc.moveTo(310, cardY + 82).lineTo(535, cardY + 82).strokeColor('#c2e7d9').lineWidth(0.8).stroke();
-    doc.text(`Rate Card Ref: ${quote.rate_card_version}`, 310, cardY + 88);
-
-    // 4. COST SUMMARY TABLE
-    let currentY = 262;
-
-    // Header for Cost Summary Section
-    doc.fillColor(brandBlue).rect(50, currentY, 16, 16).fill();
-    drawIcon(doc, ICONS.document, 52, currentY + 2, 12, '#ffffff');
-    doc.fillColor(brandBlue).font('Spaced').fontSize(11).text('COST SUMMARY', 72, currentY + 4);
-
-    const tableTop = currentY + 22;
-    const headerHeight = 22;
-
-    // Draw main Table Header
-    doc.rect(50, tableTop, 495, headerHeight).fill(brandBlue);
-    doc.fillColor('#ffffff').font('ProductSans-Bold').fontSize(9.5);
-    doc.text('Item Description', 60, tableTop + 7);
-    doc.text('Qty', 305, tableTop + 7, { width: 35, align: 'center' });
-    doc.text('Unit Price (₹)', 355, tableTop + 7, { width: 85, align: 'right' });
-    doc.text('Total (₹)', 455, tableTop + 7, { width: 80, align: 'right' });
-
-    // Table rows data
+    let rowY = tableTop + headerHeight;
     const out = quote.outputSnapshot || {};
     const rates = quote.rates || {};
 
     const items = [
-      { name: 'Cooling Pads', qty: out.pads ? out.pads.totalPads : 0, unit: rates.coolingPadUnitCost || 0, total: out.pads ? out.pads.cost : 0 },
-      { name: 'Bottom Plate & Side Plates Sheeting', qty: out.plates ? out.plates.sheetsNeeded : 0, unit: rates.plateCostPerSheet || 0, total: out.plates ? out.plates.cost : 0 },
-      { name: 'Aluminium Frame Channels', qty: out.frame ? out.frame.barsNeeded : 0, unit: rates.aluminiumCostPerBar || 0, total: out.frame ? out.frame.cost : 0 },
-      { name: 'Support Patti (Vertical joint posts)', qty: out.patti ? out.patti.barsNeeded : 0, unit: rates.supportPattiCostPerBar || 0, total: out.patti ? out.patti.cost : 0 },
-      { name: 'Plumbing System & Piping Fittings', qty: 1, unit: out.pumpPlumbing ? out.pumpPlumbing.plumbingCost : 0, total: out.pumpPlumbing ? out.pumpPlumbing.plumbingCost : 0 },
-      { name: `Water Pump (${out.pumpPlumbing && out.pumpPlumbing.selectedPump ? out.pumpPlumbing.selectedPump.modelName : 'N/A'})`, qty: 1, unit: out.pumpPlumbing && out.pumpPlumbing.selectedPump ? out.pumpPlumbing.selectedPump.cost : 0, total: out.pumpPlumbing ? out.pumpPlumbing.pumpCost : 0 }
+      { name: 'Evaporative Cooling Pads', desc: 'Cellular cellulose paper cooling pad 7090 NTK', qty: out.pads ? out.pads.totalPads : 0, unitName: 'nos', rate: rates.coolingPadUnitCost || 0, total: out.pads ? out.pads.cost : 0 },
+      { name: 'Aluminium Plate Sheeting', desc: 'Bottom Plate & Side Plates Sheeting protective guards', qty: out.plates ? out.plates.sheetsNeeded : 0, unitName: 'pcs', rate: rates.plateCostPerSheet || 0, total: out.plates ? out.plates.cost : 0 },
+      { name: 'Aluminium Outer Frame Channels', desc: 'Outer supporting boundary aluminum frame bars', qty: out.frame ? out.frame.barsNeeded : 0, unitName: 'bars', rate: rates.aluminiumCostPerBar || 0, total: out.frame ? out.frame.cost : 0 },
+      { name: 'Vertical Joint Support Patti', desc: 'Vertical alignment joint support patti structures', qty: out.patti ? out.patti.barsNeeded : 0, unitName: 'bars', rate: rates.supportPattiCostPerBar || 0, total: out.patti ? out.patti.cost : 0 },
+      { name: 'Plumbing Piping & Sizing fittings', desc: 'Piping water distribution system and flow fittings', qty: 1, unitName: 'lot', rate: out.pumpPlumbing ? out.pumpPlumbing.plumbingCost : 0, total: out.pumpPlumbing ? out.pumpPlumbing.plumbingCost : 0 },
+      { name: `Water Circulation Pump`, desc: `Water pump (${out.pumpPlumbing && out.pumpPlumbing.selectedPump ? out.pumpPlumbing.selectedPump.modelName : 'N/A'})`, qty: 1, unitName: 'no', rate: out.pumpPlumbing && out.pumpPlumbing.selectedPump ? out.pumpPlumbing.selectedPump.cost : 0, total: out.pumpPlumbing ? out.pumpPlumbing.pumpCost : 0 }
     ];
 
-    let rowY = tableTop + headerHeight;
-    const rowHeight = 20;
+    const displayRowsCount = items.length;
 
-    doc.font('ProductSans').fontSize(9).fillColor(textColor);
+    const formatCurrency = (val) => {
+      return Number(val).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    };
 
-    items.forEach((item, index) => {
-      // Background shading
-      if (index % 2 === 1) {
-        doc.rect(50, rowY, 495, rowHeight).fill(lightBg);
+    let totalGrossAmount = 0;
+    let localTableTop = tableTop;
+
+    const colLines = [
+      colX.name,
+      colX.desc,
+      colX.hsn,
+      colX.qty,
+      colX.unit,
+      colX.rate,
+      colX.discount,
+      colX.amount
+    ];
+
+    for (let i = 0; i < displayRowsCount; i++) {
+      const item = items[i];
+      let itemRowHeight = 22;
+      let nameHeight = doc.heightOfString(item.name || '', { width: colWidths.name - 5 }) + 8;
+      let descHeight = doc.heightOfString(item.desc || '', { width: colWidths.desc - 5 }) + 8;
+      itemRowHeight = Math.max(itemRowHeight, nameHeight, descHeight);
+
+      // Check page overflow
+      if (rowY + itemRowHeight > 780) {
+        colLines.forEach((x) => {
+          doc.moveTo(x, localTableTop).lineTo(x, rowY).strokeColor('#CCCCCC').lineWidth(0.5).stroke();
+        });
+
+        doc.addPage();
+        rowY = 40;
+        localTableTop = 40;
+
+        // Draw header box on new page
+        doc.rect(leftMargin, rowY, contentWidth, headerHeight).fill('#F2F2F2');
+        doc.rect(leftMargin, rowY, contentWidth, headerHeight).strokeColor('#CCCCCC').lineWidth(0.5).stroke();
+        
+        doc.fillColor('#1A1A1A').font('Roboto-Bold').fontSize(8);
+        doc.text('Sr. No.', colX.sl, rowY + 5, { width: colWidths.sl, align: 'center' });
+        doc.text('Item Name', colX.name + 3, rowY + 5, { width: colWidths.name - 3 });
+        doc.text('Description', colX.desc + 3, rowY + 5, { width: colWidths.desc - 3 });
+        doc.text('HSN/SAC Code', colX.hsn, rowY + 5, { width: colWidths.hsn, align: 'center' });
+        doc.text('QTY', colX.qty, rowY + 5, { width: colWidths.qty, align: 'center' });
+        doc.text('Unit', colX.unit, rowY + 5, { width: colWidths.unit, align: 'center' });
+        doc.text('Rate (₹)', colX.rate, rowY + 5, { width: colWidths.rate, align: 'right' });
+        doc.text('Discount', colX.discount, rowY + 5, { width: colWidths.discount, align: 'right' });
+        doc.text('Total Amount (₹)', colX.amount, rowY + 5, { width: colWidths.amount - 2, align: 'right' });
+
+        rowY += headerHeight;
       }
+
+      // Draw row box
+      doc.rect(leftMargin, rowY, contentWidth, itemRowHeight).strokeColor('#CCCCCC').lineWidth(0.5).stroke();
       
-      // Row borders
-      doc.moveTo(50, rowY).lineTo(545, rowY).strokeColor(borderLight).lineWidth(0.5).stroke();
-      
-      // Cell values
-      doc.fillColor(textColor)
-        .text(item.name, 60, rowY + 5)
-        .text(item.qty.toString(), 305, rowY + 5, { width: 35, align: 'center' })
-        .text(formatCurrency(item.unit), 355, rowY + 5, { width: 85, align: 'right' })
-        .text(formatCurrency(item.total), 455, rowY + 5, { width: 80, align: 'right' });
+      const qty = Number(item.qty || 0);
+      const rate = Number(item.rate || 0);
+      const itemTotal = qty * rate;
+      totalGrossAmount += itemTotal;
 
-      // Left & Right boundary lines & column separators
-      doc.moveTo(50, rowY).lineTo(50, rowY + rowHeight).strokeColor(borderColor).lineWidth(0.5).stroke();
-      doc.moveTo(545, rowY).lineTo(545, rowY + rowHeight).strokeColor(borderColor).lineWidth(0.5).stroke();
+      doc.fillColor('#333333').font('Roboto').fontSize(8)
+        .text((i + 1).toString(), colX.sl, rowY + 5, { width: colWidths.sl, align: 'center' })
+        .text(item.name || '', colX.name + 3, rowY + 5, { width: colWidths.name - 5 })
+        .text(item.desc || '', colX.desc + 3, rowY + 5, { width: colWidths.desc - 5 })
+        .text('-', colX.hsn, rowY + 5, { width: colWidths.hsn, align: 'center' })
+        .text(qty.toString(), colX.qty, rowY + 5, { width: colWidths.qty, align: 'center' })
+        .text(item.unitName || 'nos', colX.unit, rowY + 5, { width: colWidths.unit, align: 'center' })
+        .text(formatCurrency(rate), colX.rate, rowY + 5, { width: colWidths.rate, align: 'right' })
+        .text('-', colX.discount, rowY + 5, { width: colWidths.discount, align: 'right' })
+        .text(formatCurrency(itemTotal), colX.amount, rowY + 5, { width: colWidths.amount - 2, align: 'right' });
 
-      // Column vertical separators
-      doc.moveTo(300, rowY).lineTo(300, rowY + rowHeight).strokeColor(borderLight).lineWidth(0.5).stroke();
-      doc.moveTo(345, rowY).lineTo(345, rowY + rowHeight).strokeColor(borderLight).lineWidth(0.5).stroke();
-      doc.moveTo(445, rowY).lineTo(445, rowY + rowHeight).strokeColor(borderLight).lineWidth(0.5).stroke();
+      rowY += itemRowHeight;
+    }
 
-      rowY += rowHeight;
+    // Draw vertical gridlines for the final page
+    colLines.forEach((x) => {
+      doc.moveTo(x, localTableTop).lineTo(x, rowY).strokeColor('#CCCCCC').lineWidth(0.5).stroke();
     });
 
-    // Draw bottom table boundary line
-    doc.moveTo(50, rowY).lineTo(545, rowY).strokeColor(borderColor).lineWidth(1).stroke();
+    currentY = rowY + 8;
 
-    // Grand Total Layout Banner
-    doc.rect(290, rowY + 6, 140, 24).fill(brandBlue);
-    doc.rect(430, rowY + 6, 115, 24).fill(brandDarkGreen);
+    // Check space for totals box
+    if (currentY > 675) {
+      doc.addPage();
+      currentY = 40;
+    }
 
-    doc.fillColor('#ffffff').font('ProductSans-Bold').fontSize(9.5)
-       .text('GRAND TOTAL (INR)', 302, rowY + 13)
-       .text(formatCurrency(out.grandTotal || 0), 435, rowY + 13, { width: 102, align: 'right' });
+    const totalTaxableVal = totalGrossAmount;
+    const cgstVal = totalTaxableVal * 0.09;
+    const sgstVal = totalTaxableVal * 0.09;
+    const grandTotalVal = Math.round(totalTaxableVal + cgstVal + sgstVal);
 
-    // Validity Note below table
-    doc.fillColor(textColor).font('ProductSans-Italic').fontSize(8.5)
-       .text('* Quotation is valid for 30 days from the date of issue.', 50, rowY + 13);
+    // Amount in Words
+    const amountInWordsText = numberToWords(grandTotalVal);
 
-    currentY = rowY + 45;
+    doc.fillColor('#1A1A1A').font('Roboto-Bold').fontSize(8).text('Amount in Words:', leftMargin, currentY);
+    doc.fillColor('#333333').font('Roboto').fontSize(8).text(amountInWordsText, leftMargin + 80, currentY, { width: 200 });
 
-    // 5. INTERNAL ENGINEERING MATERIALS LIST
-    doc.fillColor(brandBlue).rect(50, currentY, 16, 16).fill();
+    // Right Side: Summary totals box
+    const totalBoxWidth = 190;
+    const totalBoxX = 595.28 - rightMargin - totalBoxWidth;
+    let tY = currentY - 8;
+
+    const drawTotalRow = (label, valStr, isBold = false) => {
+      doc.rect(totalBoxX, tY, totalBoxWidth, 15).strokeColor('#CCCCCC').lineWidth(0.5).stroke();
+      doc.fillColor('#1A1A1A').font(isBold ? 'Roboto-Bold' : 'Roboto').fontSize(8)
+         .text(label, totalBoxX + 6, tY + 4);
+      doc.text('₹ ' + valStr, totalBoxX + 110, tY + 4, { width: totalBoxWidth - 116, align: 'right' });
+      tY += 15;
+    };
+
+    drawTotalRow('Total Amount', formatCurrency(totalGrossAmount));
+    drawTotalRow('Discount', '0.00');
+    drawTotalRow('Total Taxable Amount', formatCurrency(totalTaxableVal));
+    drawTotalRow('CGST ( 9% )', formatCurrency(cgstVal));
+    drawTotalRow('SGST / IGST ( 9% )', formatCurrency(sgstVal));
+    drawTotalRow('Grand Total', formatCurrency(grandTotalVal), true);
+
+    currentY = Math.max(currentY + 50, tY + 10);
+
+    // Render Content Blocks / Terms
+    const renderContentBlock = (title, text) => {
+      if (!text || !text.trim()) return;
+      
+      if (currentY > 740) {
+        doc.addPage();
+        currentY = 40;
+      }
+
+      doc.fillColor('#1A1A1A').font('Roboto-Bold').fontSize(9).text(title, leftMargin, currentY);
+      currentY += 14;
+
+      const paragraphs = text.split('\n\n');
+      paragraphs.forEach((para) => {
+        if (!para.trim()) return;
+        
+        const lines = para.split('\n');
+        lines.forEach((line) => {
+          if (!line.trim()) return;
+          const lineHeight = doc.heightOfString(line.trim(), { width: contentWidth, align: 'justify', lineGap: 3.5 });
+          
+          if (currentY + lineHeight > 780) {
+            doc.addPage();
+            currentY = 40;
+          }
+          
+          doc.fillColor('#333333').font('Roboto').fontSize(8.5).text(line.trim(), leftMargin, currentY, { 
+            width: contentWidth, 
+            align: 'justify',
+            lineGap: 3.5
+          });
+          currentY += lineHeight + 4;
+        });
+        currentY += 6;
+      });
+      currentY += 5;
+    };
+
+    // Render Chiller Terms & Conditions
+    const paymentTermsText = 'Payment terms shall be as mentioned in the commercial summary of this quotation.';
+    renderContentBlock('Payment Terms:', paymentTermsText);
+
+    const numberedTermsText = [
+      '1. GST shall be charged extra as applicable unless specifically stated otherwise.',
+      '2. Delivery schedule shall commence from receipt of technically and commercially clear purchase order and agreed advance payment.',
+      '3. Freight and transit insurance shall be as specified in the commercial summary.'
+    ].join('\n\n');
+    renderContentBlock('Terms & Conditions:', numberedTermsText);
+
+    // Render Chiller Internal Engineering Specifications (on page 2)
+    doc.addPage();
+    currentY = 40;
+
+    doc.fillColor('#1b4c80').rect(50, currentY, 16, 16).fill();
     drawIcon(doc, ICONS.cog, 52, currentY + 2, 12, '#ffffff');
-    doc.fillColor(brandBlue).font('Spaced').fontSize(11).text('INTERNAL ENGINEERING MATERIALS LIST', 72, currentY + 4);
+    doc.fillColor('#1b4c80').font('Roboto-Bold').fontSize(11).text('INTERNAL ENGINEERING MATERIALS LIST', 72, currentY + 4);
 
     const engBoxY = currentY + 22;
     const engBoxHeight = 158;
 
     // Main Box
-    doc.roundedRect(50, engBoxY, 495, engBoxHeight, 6).fill(lightBg).strokeColor(borderColor).lineWidth(1).stroke();
+    doc.roundedRect(50, engBoxY, 495, engBoxHeight, 6).fill('#f8fafc').strokeColor('#cbd5e1').lineWidth(1).stroke();
 
     // Column 1
     const col1X = 65;
     const colTopY = engBoxY + 12;
 
     // Subheader: Cooling Pads Details
-    drawIcon(doc, ICONS.grid, col1X, colTopY + 2, 10, brandGreen);
-    doc.fillColor(brandGreen).font('Spaced').fontSize(10).text('Cooling Pads Details:', col1X + 16, colTopY + 2);
+    drawIcon(doc, ICONS.grid, col1X, colTopY + 2, 10, '#3ba846');
+    doc.fillColor('#3ba846').font('Roboto-Bold').fontSize(10).text('Cooling Pads Details:', col1X + 16, colTopY + 2);
     
-    doc.fillColor(textColor).font('ProductSans').fontSize(8.5);
+    doc.fillColor('#334155').font('Roboto').fontSize(8.5);
     doc.text(`• Total pads: ${out.pads ? out.pads.totalPads : 0} sheet(s)`, col1X, colTopY + 17);
     doc.text(`• Details per selected face:`, col1X, colTopY + 27);
 
@@ -321,10 +474,10 @@ function generateQuotePdf(quote, res = null, filePath = null) {
 
     // Subheader: Pumps & Plumbing Sizing
     const pumpTopY = colTopY + 84;
-    drawIcon(doc, ICONS.droplet, col1X, pumpTopY + 2, 10, brandBlue);
-    doc.fillColor(brandBlue).font('Spaced').fontSize(10).text('Pumps & Plumbing Sizing:', col1X + 16, pumpTopY + 2);
+    drawIcon(doc, ICONS.droplet, col1X, pumpTopY + 2, 10, '#1b4c80');
+    doc.fillColor('#1b4c80').font('Roboto-Bold').fontSize(10).text('Pumps & Plumbing Sizing:', col1X + 16, pumpTopY + 2);
     
-    doc.fillColor(textColor).font('ProductSans').fontSize(8.5);
+    doc.fillColor('#334155').font('Roboto').fontSize(8.5);
     doc.text(`• Flow required: ${out.pumpPlumbing ? out.pumpPlumbing.requiredFlowLPH.toFixed(2) : 0} LPH`, col1X, pumpTopY + 17);
     doc.text(`• Selected Pump: ${out.pumpPlumbing && out.pumpPlumbing.selectedPump ? out.pumpPlumbing.selectedPump.modelName : 'N/A'}`, col1X, pumpTopY + 27);
     doc.text(`  (Capacity: ${out.pumpPlumbing && out.pumpPlumbing.selectedPump ? out.pumpPlumbing.selectedPump.capacityLPH : 0} LPH)`, col1X, pumpTopY + 37);
@@ -332,17 +485,17 @@ function generateQuotePdf(quote, res = null, filePath = null) {
     // Dashed Vertical Separator Line
     doc.save();
     doc.moveTo(298, engBoxY + 10).lineTo(298, engBoxY + engBoxHeight - 10)
-       .strokeColor(borderColor).lineWidth(0.8).dash(3, { space: 3 }).stroke();
+       .strokeColor('#cbd5e1').lineWidth(0.8).dash(3, { space: 3 }).stroke();
     doc.restore();
 
     // Column 2
     const col2X = 315;
     
     // Subheader: Metal & Frame Work
-    drawIcon(doc, ICONS.box, col2X, colTopY + 2, 10, brandGreen);
-    doc.fillColor(brandGreen).font('Spaced').fontSize(10).text('Metal & Frame Work:', col2X + 16, colTopY + 2);
+    drawIcon(doc, ICONS.box, col2X, colTopY + 2, 10, '#3ba846');
+    doc.fillColor('#3ba846').font('Roboto-Bold').fontSize(10).text('Metal & Frame Work:', col2X + 16, colTopY + 2);
 
-    doc.fillColor(textColor).font('ProductSans').fontSize(8.5);
+    doc.fillColor('#334155').font('Roboto').fontSize(8.5);
     doc.text(`• Outer frame bars: ${out.frame ? out.frame.barsNeeded : 0} pcs`, col2X, colTopY + 17);
     doc.text(`  - Total Length: ${out.frame ? out.frame.totalLength.toFixed(0) : 0} mm`, col2X, colTopY + 27);
     
@@ -352,19 +505,12 @@ function generateQuotePdf(quote, res = null, filePath = null) {
     doc.text(`• Plate sheets (bottom + sides): ${out.plates ? out.plates.sheetsNeeded : 0} pcs`, col2X, colTopY + 65);
     doc.text(`  - Total Plate Area: ${out.plates ? out.plates.totalArea.toFixed(0) : 0} mm²`, col2X, colTopY + 75);
 
-    // 6. FOOTER & DECORATIVE CORNER ACCENTS
-    // Footer line
-    doc.fillColor('#94a3b8').font('ProductSans').fontSize(8)
-       .text('Generated automatically by Adiabatic Cooling System Quotation Automation Tool', 50, 808, { align: 'center' });
+    // Push footer to bottom of current page
+    const footerY = 780;
+    doc.moveTo(leftMargin, footerY - 5).lineTo(595.28 - rightMargin, footerY - 5).strokeColor('#CCCCCC').lineWidth(0.5).stroke();
 
-    // Decorative Angled Corner Accent Bars at the bottom
-    // Left Accent (Green/Blue angle)
-    doc.moveTo(0, 835).lineTo(30, 835).lineTo(45, 842).lineTo(0, 842).closePath().fill(brandBlue);
-    doc.moveTo(48, 842).lineTo(65, 842).lineTo(60, 839).lineTo(45, 839).closePath().fill(brandGreen);
-
-    // Right Accent (Blue/Green angle)
-    doc.moveTo(595, 835).lineTo(565, 835).lineTo(550, 842).lineTo(595, 842).closePath().fill(brandBlue);
-    doc.moveTo(547, 842).lineTo(530, 842).lineTo(535, 839).lineTo(550, 839).closePath().fill(brandGreen);
+    doc.fillColor('#1A1A1A').font('Roboto-Bold').fontSize(9).text('Thank you for your business!', leftMargin, footerY, { width: contentWidth, align: 'center' });
+    doc.fillColor('#666666').font('Roboto').fontSize(7.5).text('This quotation is confidential and intended solely for the recipient.', leftMargin, footerY + 12, { width: contentWidth, align: 'center' });
 
     // Finalize PDF
     doc.end();

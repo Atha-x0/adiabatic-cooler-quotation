@@ -49,9 +49,9 @@ function calculateAluminiumFrame(faces, faceSelectionType, H, wastageFactor, sto
   const selType = faceSelectionType.toLowerCase();
   if (selType === '4-face' || selType === '3-face') {
     cornerPostCount = 4;
-  } else if (selType === '2-face-opposite') {
+  } else if (selType === '2-face-opposite' || selType === '2-opposite') {
     cornerPostCount = 4;
-  } else if (selType === '2-face-adjacent') {
+  } else if (selType === '2-face-adjacent' || selType === '2-adjacent') {
     cornerPostCount = 3;
   }
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { LayoutDashboard, Calculator, Users, Settings, LogOut, Snowflake, Eye, FileText, FileSpreadsheet, IndianRupee, Percent } from 'lucide-react';
 import seetechLogo from './assets/seetech-logo.png';
 
-const API_URL = 'http://localhost:3000/api';
+const API_URL = 'http://localhost:3001/api';
 
 export default function App() {
   const [token, setToken] = useState(localStorage.getItem('token') || null);
